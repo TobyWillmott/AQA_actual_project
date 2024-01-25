@@ -1,5 +1,8 @@
-To run my project you must first create the databse by running the create database file
-Ensure that all the driver files are connnected
-Then run the write to database file
+To run my project:
+
+Check if the database has been created
+If not run the create database file, check all the driver files are connected, then run the write to database file
+if it has been created alsready install driver files
+
 
 finally run the TkApplication file 
