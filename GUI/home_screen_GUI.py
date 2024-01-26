@@ -13,7 +13,6 @@ class HomeScreen(tk.Frame):
                                     font=("Arial", 25))
         self.user_id = user_id
         self.controller = parent
-        #self.create_league_button = tk.Button(self, text="Create League", command=self.create_league_clicked, padx=75, pady=55)
         self.join_league_var = tk.StringVar()
         self.join_league_entry = tk.Entry(self, textvariable=self.join_league_var, width=30, bg="white", fg="black")
         self.join_league_button = tk.Button(self, text="Join", command=self.join_league_clicked, highlightbackground="#E5E5E5")
@@ -40,6 +39,10 @@ class HomeScreen(tk.Frame):
         self.gameweek_var.set(self.gameweek_timings[0])
         self.gameweek_drop_down_menu = tk.OptionMenu(self, self.gameweek_var, *self.gameweek_timings)
         self.gameweek_drop_down_menu.config(bg="#E5E5E5", fg="black")
+
+        #self.profile_image = tk.PhotoImage(file=r"GUI/images/back_button.png").subsample(19,19)
+        #self.profile_button = tk.Button(self, image=self.profile_image, command=self.profile_clicked, highlightbackground="#E5E5E5", relief="flat", bg="#E5E5E5")
+
         self.place_widgets()
 
     def place_widgets(self):
@@ -95,3 +98,4 @@ class HomeScreen(tk.Frame):
         league_gameweek = self.controller.get_final_league_gameweek()
         self.controller.add_user_league(self.user_id, league_gameweek[0])
         self.controller.show_league_selection_page(self.user_id, league_gameweek[0], gameweek_id)
+

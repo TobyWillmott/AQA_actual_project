@@ -30,16 +30,16 @@ def api_check_lives(user_ids, league_id, selections):
                         if match["team_a_score"] is None or match["team_h_score"] is None:
                             break
                         elif match["team_a_score"] == match["team_h_score"]:
-                            num_lives -= 1
-                        elif match["team_a_score"] < match["team_h_score"]:
-                            num_lives -= 2
+                            num_lives += 1
+                        elif match["team_a_score"] > match["team_h_score"]:
+                            num_lives += 3
                     elif match["team_h"] == team_id:
                         if match["team_a_score"] is None or match["team_h_score"] is None:
                             break
                         elif match["team_a_score"] == match["team_h_score"]:
-                            num_lives -= 1
-                        elif match["team_a_score"] > match["team_h_score"]:
-                            num_lives -= 2
+                            num_lives += 1
+                        elif match["team_a_score"] < match["team_h_score"]:
+                            num_lives += 3
         lives.append(num_lives)
     return lives
 

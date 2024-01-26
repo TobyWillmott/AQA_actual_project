@@ -71,8 +71,8 @@ class ViewLeague(tk.Frame):
                 self.user_teams[i].place(x=625, y=20 + (index-10) * 37)
                 self.versus_label[i].place(x=653, y=20 + (index-10) * 37)
                 self.opp_teams[i].place(x=675, y=20 + (index-10) * 37)
-                self.user_teams_score[i].place(x=625, y=35 + index * 37)
-                self.opp_teams_score[i].place(x=675, y=35 + index * 37)
+                self.user_teams_score[i].place(x=625, y=35 + (index-10) * 37)
+                self.opp_teams_score[i].place(x=675, y=35 + (index-10) * 37)
                 index += 1
 
 
