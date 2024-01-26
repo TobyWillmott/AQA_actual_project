@@ -22,7 +22,7 @@ def api_check_lives(user_ids, league_id, selections):
     data = response.json()
 
     for user in selections:
-        num_lives = 10
+        num_lives = 0
         for user_id, team_id, gameweek_id in user:
             for match in data:
                 if match["event"] == gameweek_id and (match["team_a"] == team_id or match["team_h"] == team_id):
