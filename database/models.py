@@ -25,10 +25,10 @@ class UserLeague(Base):
 class User(Base):
     __tablename__ = "user"
     user_id = Column(Integer, primary_key=True, autoincrement=True)
-    first_name = Column(String, unique=False, nullable=True)
-    last_name = Column(String, unique=False, nullable=True)
-    username = Column(String, unique=True, nullable=True)
-    password = Column(String, unique=False, nullable=True)
+    first_name = Column(String, unique=False, nullable=False)
+    last_name = Column(String, unique=False, nullable=False)
+    username = Column(String, unique=True, nullable=False)
+    password = Column(String, unique=False, nullable=False)
 
     leagues = relationship("League",
                            secondary="user_league",

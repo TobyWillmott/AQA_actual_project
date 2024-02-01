@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-from database.models import League, Team, Gameweek
+from database.models import League, Team, Gameweek, User
 from datetime import datetime
 
 teams = [Team(team_name="Arsenal", team_abb="ARS"),
@@ -24,9 +24,9 @@ teams = [Team(team_name="Arsenal", team_abb="ARS"),
          Team(team_name="West Ham United", team_abb="WHU"),
          Team(team_name="Wolverhampton Wanderers", team_abb="WOL")]
 
-#users = [User(first_name="Toby", last_name="Willmott", username="tobywillmott", password="Pqssword123"),
-#         User(first_name="James", last_name="Smith", username="jamessmith", password="p@rdhE123"),
-#         User(first_name="John", last_name="Dixon", username="tomdixon", password="Th@$$or99od"), ]
+users = [User(first_name="Toby", last_name="Willmott", username="tobywillmott", password="ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f"),
+         User(first_name="James", last_name="Smith", username="jamessmith", password="ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f"),
+         User(first_name="John", last_name="Dixon", username="tomdixon", password="ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f"), ]
 
 gameweek = [Gameweek(start_date=datetime(2023, 8, 11, 17, 30, 0)),
             Gameweek(start_date=datetime(2023, 8, 19, 12, 30, 0)),
@@ -74,7 +74,7 @@ leagues = [League(gameweek_id=1, league_name="The best league"),
 engine = create_engine("sqlite:///fantasy_football.sqlite", echo=True)
 
 with Session(engine) as sess:
-    #sess.add_all(users)
+    sess.add_all(users)
     sess.add_all(teams)
     sess.add_all(leagues)
     sess.add_all(gameweek)

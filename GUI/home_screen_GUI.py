@@ -42,7 +42,6 @@ class HomeScreen(tk.Frame):
 
         #self.profile_image = tk.PhotoImage(file=r"GUI/images/back_button.png").subsample(19,19)
         #self.profile_button = tk.Button(self, image=self.profile_image, command=self.profile_clicked, highlightbackground="#E5E5E5", relief="flat", bg="#E5E5E5")
-
         self.place_widgets()
 
     def place_widgets(self):

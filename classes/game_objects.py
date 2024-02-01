@@ -72,9 +72,12 @@ class Game:
             selection_lis.append(selection)
         return api.api_check_lives(user_ids, league_id, selection_lis)
     def hash_password(self, password):
-        hasher = hashlib.sha256()
-        hasher.update(bytes(password, 'utf-8'))
-        return hasher.hexdigest()
+        if password == "":
+            return False
+        else:
+            hasher = hashlib.sha256()
+            hasher.update(bytes(password, 'utf-8'))
+            return hasher.hexdigest()
 
     def get_games(self, user_id, league_id):
         user_selections = qry.qry_get_games(user_id, league_id)
