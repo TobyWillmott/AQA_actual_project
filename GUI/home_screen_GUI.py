@@ -94,7 +94,7 @@ class HomeScreen(tk.Frame):
                 return j[0]
 
     def profile_clicked(self):
-        self.sign_out_button = tk.Button(self, text="Sign Out", command=self.create_button_clicked, highlightbackground="#E5E5E5")
+        self.sign_out_button = tk.Button(self, text="Sign Out", command=self.sign_out_clicked, highlightbackground="#E5E5E5")
         self.sign_out_button.place(x=700, y=20)
     def create_button_clicked(self):
         gameweek_id = self.get_gameweek_id_final()
@@ -103,3 +103,5 @@ class HomeScreen(tk.Frame):
         self.controller.add_user_league(self.user_id, league_gameweek[0])
         self.controller.show_league_selection_page(self.user_id, league_gameweek[0], gameweek_id)
 
+    def sign_out_clicked(self):
+        self.controller.show_frame("sign_in_frame")
