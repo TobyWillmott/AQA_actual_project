@@ -1,7 +1,7 @@
 from database import queries as qry
 import classes.api as api
 from sqlalchemy import create_engine
-from database.models import Base, User
+from database.models import Base, User, Selection
 from sqlalchemy.orm import Session
 import hashlib
 
@@ -13,6 +13,12 @@ class Game:
 
     def __init__(self):
         self.user = None
+        self.user_selections = None
+        self.user_selections_db = []
+        self.add_league = []
+        self.add_user_league = []
+        self.start_gameweek = None
+        self.end_gameweek = None
 
     def add_user(self, first_name_, last_name_, username_, password_):
         qry.qry_add_user(first_name_, last_name_, username_, password_)
@@ -21,13 +27,53 @@ class Game:
         return qry.qry_get_gameweek_timings()
 
     def add_league(self, gameweek_id_, league_name_):
-        qry.qry_add_league(gameweek_id_, league_name_)
+        self.add_league = [gameweek_id_, league_name_]
+
 
     def add_user_league(self, user_id_, league_id_):
+        self.add_user_league = [user_id_, league_id_]
         qry.qry_add_user_league(user_id_, league_id_)
 
-    def add_selection_list(self, user_selections):
-        qry.qry_add_selection_list(user_selections)
+    def add_all(self):
+        if self.add_league != []:
+            qry.qry_add_league(self.add_league[0], self.add_league[1]),
+            self.add_league = []
+        qry.qry_add_user_league(self.add_user_league[0], self.add_user_league[1])
+        self.add_user_league = []
+
+        qry.qry_add_selection_list(self.user_selections_db)
+        self.user_selections_db = []
+        self.user_selections = None
+        self.start_gameweek = None
+        self.end_gameweek = None
+
+    def add_user_selection(self, selection_lis):
+        if self.user_selections == None:
+            self.user_selections = selection_lis
+            self.start_gameweek = selection_lis[0]
+            if selection_lis[0]+20>40:
+                self.end_gameweek = 40
+            else:
+                self.end_gameweek = self.start_gameweek+20
+        else:
+            if selection_lis[0]-self.end_gameweek==0:
+                for gameweek in self.user_selections:
+                    if gameweek[2] == selection_lis[2]:
+                        return "Team has already been selected"
+                    self.user_selections_db.append(Selection(gameweek_id=selection_lis[0], outcome=None, user_id=selection_lis[1],
+                      team_id=selection_lis[2],
+                      league_id=selection_lis[3]))
+                    self.add_all()
+                    return "finished"
+            else:
+                for gameweek in self.user_selections:
+                    if gameweek[2] == selection_lis[2]:
+                        return "Team has already been selected"
+                    self.user_selections_db.append(Selection(gameweek_id=selection_lis[0], outcome=None, user_id=selection_lis[1],
+                      team_id=selection_lis[2],
+                      league_id=selection_lis[3]))
+
+
 
     def get_gameweek_id(self):
         return qry.qry_get_gameweek_id()
@@ -35,8 +81,8 @@ class Game:
     def get_username_details(self, username_entry):
         return qry.qry_get_username_details(username_entry)
 
-    def add_selection(self, gameweek_id_, user_id_, team_id_, league_id_):
-        qry.qry_add_selection(gameweek_id_, user_id_, team_id_, league_id_)
+#    def add_selection(self, gameweek_id_, user_id_, team_id_, league_id_):
+#        qry.qry_add_selection(gameweek_id_, user_id_, team_id_, league_id_)
 
     def get_teams(self):
         return qry.qry_get_teams()

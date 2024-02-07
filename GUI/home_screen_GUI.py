@@ -100,7 +100,7 @@ class HomeScreen(tk.Frame):
         gameweek_id = self.get_gameweek_id_final()
         self.controller.add_league(gameweek_id, self.league_name_entry.get())
         league_gameweek = self.controller.get_final_league_gameweek()
-        self.controller.add_user_league(self.user_id, league_gameweek[0])
+        #self.controller.add_user_league(self.user_id, league_gameweek[0])
         self.controller.show_league_selection_page(self.user_id, league_gameweek[0], gameweek_id)
 
     def sign_out_clicked(self):

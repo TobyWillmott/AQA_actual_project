@@ -130,29 +130,23 @@ class SelectTeams(tk.Frame):
 
     def select_picked(self):
         selection = [self.current_gameweek_id.get(), self.user_id, self.team_id, self.league_id]
-        self.user_selection.append(
-            Selection(gameweek_id=self.current_gameweek_id.get(), outcome=None, user_id=self.user_id,
-                      team_id=self.team_id,
-                      league_id=self.league_id))
-        self.teams_buttons[self.team_id - 1].configure(bg="grey",
-                                                       text=f"{self.teams_id[self.team_id - 1][1]}\n{self.current_gameweek_id.get()}")
-        current_num = self.current_gameweek_id.get()
-        current_num += 1
-        self.current_gameweek_id.set(current_num)
-        self.gameweek_label.configure(text=f"The gameweek to choose a team for is {self.current_gameweek_id.get()}")
-        self.display_matches_second()
-        if self.check_gameweek():
-            self.finished_selection()
-
-    def check_gameweek(self):
-        if self.current_gameweek_id.get() == self.start_gameweek + 20:
-            print("found")
-            return True
+        while self.controller.add_user_selection(selection) == "Team has already been selected":
+            print("team already selected")
         else:
-            return False
+            self.controller.add_user_selection(selection)
+            self.teams_buttons[self.team_id - 1].configure(bg="grey",
+                                                           text=f"{self.teams_id[self.team_id - 1][1]}\n{self.current_gameweek_id.get()}")
+            current_num = self.current_gameweek_id.get()
+            current_num += 1
+            self.current_gameweek_id.set(current_num)
+            self.gameweek_label.configure(text=f"The gameweek to choose a team for is {self.current_gameweek_id.get()}")
+            self.display_matches_second()
+            if self.controller.add_user_selection(selection) == "finished":
+                self.finished_selection()
+
 
     def finished_selection(self):
-        self.controller.add_selection_list(self.user_selection)
+        #self.controller.add_selection_list(self.user_selection)
         self.return_home = tk.Button(self, text="Return to homepage", command=self.return_home_page)
         self.return_home.grid(row=20, column=2)
 

@@ -68,12 +68,12 @@ def qry_add_selection_list(user_selections):
         sess.commit()
 
 
-def qry_add_selection(gameweek_id_, user_id_, team_id_, league_id_):
-    with Session(engine) as sess:
-        user_selection = Selection(gameweek_id=gameweek_id_, outcome=None, user_id=user_id_, team_id=team_id_,
-                                   league_id=league_id_)
-        sess.add(user_selection)
-        sess.commit()
+#def qry_add_selection(gameweek_id_, user_id_, team_id_, league_id_):
+#    with Session(engine) as sess:
+#        user_selection = Selection(gameweek_id=gameweek_id_, outcome=None, user_id=user_id_, team_id=team_id_,
+#                                   league_id=league_id_)
+#        sess.add(user_selection)
+#        sess.commit()
 
 
 def qry_get_teams():

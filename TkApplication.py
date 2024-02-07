@@ -88,10 +88,11 @@ class TkApplication(tk.Tk):
         self.game.add_user(first_name_, last_name_, username_, password_)
 
     def add_league(self, gameweek_id_, league_name_):
+        print(gameweek_id_, league_name_)
         self.game.add_league(gameweek_id_, league_name_)
 
-    def add_user_league(self, user_id_, league_id_):
-        self.game.add_user_league(user_id_, league_id_)
+#    def add_user_league(self, user_id_, league_id_):
+#        self.game.add_user_league(user_id_, league_id_)
     def get_username_details(self, username_entry):
         return self.game.get_username_details(username_entry)
 
@@ -104,6 +105,8 @@ class TkApplication(tk.Tk):
     def add_selection_list(self, user_selections):
         self.game.add_selection_list(user_selections)
 
+    def add_user_selections(self, lis):
+        return self.game.add_user_selections(lis)
     def add_selection(self, gameweek_id_, user_id_, team_id_, league_id_):
         self.game.add_selection(gameweek_id_, user_id_, team_id_, league_id_)
     def get_teams(self):
