@@ -129,6 +129,7 @@ class SelectTeams(tk.Frame):
         self.team_id = team_id
 
     def select_picked(self):
+        selection = [self.current_gameweek_id.get(), self.user_id, self.team_id, self.league_id]
         self.user_selection.append(
             Selection(gameweek_id=self.current_gameweek_id.get(), outcome=None, user_id=self.user_id,
                       team_id=self.team_id,
