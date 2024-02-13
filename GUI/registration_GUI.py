@@ -115,12 +115,6 @@ class Registration(tk.Frame):
         :param message:
         :return:
         """
-        self.message_label['text'] = message
-        self.message_label['foreground'] = 'green'
-        self.message_label.after(3000, self.hide_message)
-
-        # reset the form
-        self.username_entry['foreground'] = 'black'
         self.username_var.set('')
         self.password_var.set('')
         self.first_name_var.set('')

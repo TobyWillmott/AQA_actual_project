@@ -130,19 +130,21 @@ class SelectTeams(tk.Frame):
 
     def select_picked(self):
         selection = [self.current_gameweek_id.get(), self.user_id, self.team_id, self.league_id]
-        while self.controller.add_user_selection(selection) == "Team has already been selected":
+        selection_index = self.controller.add_user_selections(selection)
+        if selection_index == "Team has already been selected":
             print("team already selected")
         else:
-            self.controller.add_user_selection(selection)
             self.teams_buttons[self.team_id - 1].configure(bg="grey",
                                                            text=f"{self.teams_id[self.team_id - 1][1]}\n{self.current_gameweek_id.get()}")
             current_num = self.current_gameweek_id.get()
             current_num += 1
             self.current_gameweek_id.set(current_num)
+            if selection_index == "finished":
+                print("finished")
+                self.finished_selection()
             self.gameweek_label.configure(text=f"The gameweek to choose a team for is {self.current_gameweek_id.get()}")
             self.display_matches_second()
-            if self.controller.add_user_selection(selection) == "finished":
-                self.finished_selection()
+
 
 
     def finished_selection(self):

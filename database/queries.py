@@ -64,6 +64,7 @@ def qry_add_user_league(user_id_, league_id_):
 
 def qry_add_selection_list(user_selections):
     with Session(engine) as sess:
+
         sess.add_all(user_selections)
         sess.commit()
 
