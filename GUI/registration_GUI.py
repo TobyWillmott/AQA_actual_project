@@ -79,15 +79,10 @@ class Registration(tk.Frame):
             self.password_entry.configure(show="*")
 
     def save_button_clicked(self):
-        """
-        Handle button click event
-        :return:
-        """
         try:
             if self.controller:
                 clicked = self.controller.add_user(self.first_name_var.get(), self.second_name_var.get(),
                                                    self.username_var.get(), self.password_var.get())
-                # self.show_success(clicked)
                 self.show_home_page()
         except ValueError as error:
             self.show_error(error)
@@ -98,11 +93,6 @@ class Registration(tk.Frame):
         self.controller.show_home_page(id)
 
     def show_error(self, message):
-        """
-        Show an error message
-        :param message:
-        :return:
-        """
         self.message_label['text'] = message
         self.message_label['foreground'] = 'red'
         self.message_label.after(3000, self.hide_message)
@@ -110,21 +100,12 @@ class Registration(tk.Frame):
         self.password_entry['foreground'] = 'red'
 
     def show_success(self, message):
-        """
-        Show a success message
-        :param message:
-        :return:
-        """
         self.username_var.set('')
         self.password_var.set('')
         self.first_name_var.set('')
         self.second_name_var.set('')
 
     def hide_message(self):
-        """
-        Hide the message
-        :return:
-        """
         self.message_label['text'] = ''
 
     def revert_colours(self):

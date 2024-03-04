@@ -27,9 +27,8 @@ def qry_add_user(first_name_, last_name_, username_, password_):
         sess.add(user)
         sess.commit()
 
-
-
 def qry_add_league(gameweek_id_, league_name_):
+    print("added")
     with Session(engine) as sess:
         league = League(gameweek_id=gameweek_id_, league_name=league_name_)
         sess.add(league)

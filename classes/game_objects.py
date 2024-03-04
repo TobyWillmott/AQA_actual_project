@@ -23,77 +23,15 @@ class Game:
 
     def add_user(self, first_name_, last_name_, username_, password_):
         qry.qry_add_user(first_name_, last_name_, username_, password_)
-
+    def add_league(self, gameweek_id_, league_name_):
+        qry.qry_add_league(gameweek_id_, league_name_)
+    def set_user(self, id):
+        self.player = Player(id)
     def get_gameweek_timings(self):
         return qry.qry_get_gameweek_timings()
 
-    def add_league(self, gameweek_id_, league_name_):
-        self.add_league_lis = [gameweek_id_, league_name_]
-
-
-    def set_user_league(self, user_id_, league_id_):
-        self.add_user_league = [user_id_, league_id_]
-
-
-    def add_all(self):
-        print("this is the league", self.add_league_lis)
-        print("this is the user_league", self.add_user_league)
-        print(self.user_selections)
-        if self.add_league_lis != []:
-            qry.qry_add_league(self.add_league_lis[0], self.add_league_lis[1]),
-            self.add_league_lis = []
-        qry.qry_add_user_league(self.add_user_league[0], self.add_user_league[1])
-        self.add_user_league = []
-
-        qry.qry_add_selection_list(self.user_selections_db)
-        self.user_selections_db = []
-        self.user_selections = None
-        self.start_gameweek = None
-        self.end_gameweek = None
-
-
     def add_user_selections(self, selection_lis):
-        print("this is the selection lis ", selection_lis)
-        print("this is the total lis", self.user_selections)
-        if self.user_selections == None:
-            print("true")
-            self.user_selections = [selection_lis]
-            self.start_gameweek = selection_lis[0]
-            self.set_user_league(selection_lis[1], selection_lis[3])
-            self.user_selections_db.append(
-                Selection(gameweek_id=selection_lis[0], outcome=None, user_id=selection_lis[1],
-                          team_id=selection_lis[2],
-                          league_id=selection_lis[3]))
-            if selection_lis[0]+20>40:
-                self.end_gameweek = 40
-            else:
-                self.end_gameweek = self.start_gameweek+19
-            print(self.user_selections)
-        else:
-            print(self.end_gameweek)
-            if selection_lis[0]>=self.end_gameweek:
-                print("gamweek has finished")
-                for gameweek in self.user_selections:
-                    if gameweek[2] == selection_lis[2]:
-                        print("team has been selected")
-                        return "Team has already been selected"
-                self.user_selections_db.append(Selection(gameweek_id=selection_lis[0], outcome=None, user_id=selection_lis[1],
-                  team_id=selection_lis[2],
-                  league_id=selection_lis[3]))
-                self.user_selections.append(selection_lis)
-                self.add_all()
-                return "finished"
-            else:
-                print(self.user_selections, "\n")
-                for gameweek in self.user_selections:
-                    if gameweek[2] == selection_lis[2]:
-                        return "Team has already been selected"
-                self.user_selections_db.append(Selection(gameweek_id=selection_lis[0], outcome=None, user_id=selection_lis[1],
-                  team_id=selection_lis[2],
-                  league_id=selection_lis[3]))
-                self.user_selections.append(selection_lis)
-
-
+        return self.player.set_user_selections(selection_lis)
 
     def get_gameweek_id(self):
         return qry.qry_get_gameweek_id()
@@ -175,14 +113,70 @@ class Game:
 
 
 
-class User:
-    def __init__(self):
-        self.sess = Session(engine)
-        self.my_user = None
+class Player:
+    def __init__(self, user_id):
+        self.user_id = user_id
+        self.user_selections = None
+        self.user_selections_db = []
+        self.add_user_league = []
+        self.start_gameweek = None
+        self.end_gameweek = None
+        self.finished = None
+    def add_all(self):
+        print("this is the user_league", self.add_user_league)
+        print(self.user_selections)
+        qry.qry_add_user_league(self.add_user_league[0], self.add_user_league[1])
+        self.add_user_league = []
 
-    def set_my_user(self, user_id):
-        self.my_user = self.sess.get(User, user_id)
-
+        qry.qry_add_selection_list(self.user_selections_db)
+        self.user_selections_db = []
+        self.user_selections = None
+        self.start_gameweek = None
+        self.end_gameweek = None
+    def set_user_selections(self, selection_lis):
+        print("this is the selection lis ", selection_lis)
+        print("this is the total lis", self.user_selections)
+        if self.user_selections == None:
+            print("true")
+            self.user_selections = [selection_lis]
+            self.start_gameweek = selection_lis[0]
+            self.set_user_league(selection_lis[1], selection_lis[3])
+            self.user_selections_db.append(
+                Selection(gameweek_id=selection_lis[0], outcome=None, user_id=selection_lis[1],
+                          team_id=selection_lis[2],
+                          league_id=selection_lis[3]))
+            if selection_lis[0] + 20 > 40:
+                self.end_gameweek = 40
+            else:
+                self.end_gameweek = self.start_gameweek + 19
+            print(self.user_selections)
+        else:
+            print(self.end_gameweek)
+            if selection_lis[0] >= self.end_gameweek:
+                print("gamweek has finished")
+                for gameweek in self.user_selections:
+                    if gameweek[2] == selection_lis[2]:
+                        print("team has been selected")
+                        return "Team has already been selected"
+                self.user_selections_db.append(
+                    Selection(gameweek_id=selection_lis[0], outcome=None, user_id=selection_lis[1],
+                              team_id=selection_lis[2],
+                              league_id=selection_lis[3]))
+                self.user_selections.append(selection_lis)
+                self.add_all()
+                return "finished"
+            else:
+                print(self.user_selections, "\n")
+                for gameweek in self.user_selections:
+                    if gameweek[2] == selection_lis[2]:
+                        return "Team has already been selected"
+                self.user_selections_db.append(
+                    Selection(gameweek_id=selection_lis[0], outcome=None, user_id=selection_lis[1],
+                              team_id=selection_lis[2],
+                              league_id=selection_lis[3]))
+                self.user_selections.append(selection_lis)
+    def set_user_league(self, user_id_, league_id_):
+        self.add_user_league = [user_id_, league_id_]
     def remove_my_user(self):
         self.my_user = None
 

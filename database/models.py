@@ -37,8 +37,8 @@ class User(Base):
                            )
     selections = relationship("Selection", back_populates='user')
 
-    #@validates("password")
-    #def validate_password(self, key, password):
+    #@validates("firstname")
+    #def validate_password(self, key, firstname):
     #    pattern = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/"
     #    if not re.fullmatch(pattern, password):
     #        raise ValueError("Invalid password \n Password must be minimum 8 characters, at least one letter and number")
