@@ -93,11 +93,21 @@ class Registration(tk.Frame):
         self.controller.show_home_page(id)
 
     def show_error(self, message):
+        print(message)
         self.message_label['text'] = message
         self.message_label['foreground'] = 'red'
         self.message_label.after(3000, self.hide_message)
-        self.username_entry['foreground'] = 'red'
-        self.password_entry['foreground'] = 'red'
+        lis = [message, "hello"]
+        print(lis)
+        if (message == ValueError('Username is invalid')) or (message == "Username already exists"):
+            print("found true")
+            self.username_entry['foreground'] = 'red'
+        if message == "Password is invalid, Must have minimum eight characters, at least one letter and one number":
+            self.password_entry['foreground'] = 'red'
+        if message == "First name is invalid":
+            self.first_name_entry['foreground'] = 'red'
+        if message == "Surname is invalid":
+            self.username_entry['foreground'] = 'red'
 
     def show_success(self, message):
         self.username_var.set('')

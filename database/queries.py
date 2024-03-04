@@ -8,25 +8,17 @@ Base.metadata.create_all(engine)
 
 
 def qry_add_user(first_name_, last_name_, username_, password_):
-    print("this is firts naem", first_name_)
-    if first_name_ == "":
-        first_name_ = None
-    if last_name_ == "":
-        last_name_ = None
-    if username_ == "":
-        username_ = None
-    if password_ == "":
-        password_ = None
-    else:
+    try:
         hasher = hashlib.sha256()
         hasher.update(bytes(password_, 'utf-8'))
         hasher = hasher.hexdigest()
         password_ = hasher
-    with Session(engine) as sess:
-        user = User(first_name=first_name_, last_name=last_name_, username=username_, password=password_)
-        sess.add(user)
-        sess.commit()
-
+        with Session(engine) as sess:
+            user = User(first_name=first_name_, last_name=last_name_, username=username_, password=password_)
+            sess.add(user)
+            sess.commit()
+    except:
+        raise ValueError("Username already exists")
 def qry_add_league(gameweek_id_, league_name_):
     print("added")
     with Session(engine) as sess:

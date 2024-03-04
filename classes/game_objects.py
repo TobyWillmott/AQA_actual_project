@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from database.models import Base, User, Selection
 from sqlalchemy.orm import Session
 import hashlib
+import re
 
 engine = create_engine("sqlite:///database/fantasy_football.sqlite", echo=True)
 Base.metadata.create_all(engine)
@@ -22,6 +23,16 @@ class Game:
         self.finished = None
 
     def add_user(self, first_name_, last_name_, username_, password_):
+        username_pattern = "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$"
+        if not re.fullmatch(username_pattern, username_):
+            raise ValueError("Username is invalid")
+        if first_name_ == "":
+            raise ValueError("First name is invalid")
+        if last_name_ == "":
+            raise ValueError("Surname is invalid")
+        password_pattern = "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+        if not re.fullmatch(password_pattern, password_):
+            raise ValueError("Password is invalid, Must have minimum eight characters, at least one letter and one number")
         qry.qry_add_user(first_name_, last_name_, username_, password_)
     def add_league(self, gameweek_id_, league_name_):
         qry.qry_add_league(gameweek_id_, league_name_)
