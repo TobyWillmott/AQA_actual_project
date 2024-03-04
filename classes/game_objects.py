@@ -34,8 +34,10 @@ class Game:
         if not re.fullmatch(password_pattern, password_):
             raise ValueError("Password is invalid, Must have minimum eight characters, at least one letter and one number")
         qry.qry_add_user(first_name_, last_name_, username_, password_)
+
     def add_league(self, gameweek_id_, league_name_):
         qry.qry_add_league(gameweek_id_, league_name_)
+
     def set_user(self, id):
         self.player = Player(id)
     def get_gameweek_timings(self):
@@ -122,6 +124,9 @@ class Game:
         elif difficulty==5:
             colour="#ff0000"
         return colour
+    def check_in_league(self, user_id, league_id):
+        if qry.qry_check_in_league(user_id, league_id) != []:
+            raise ValueError("Already in league")
 
 
 
@@ -135,8 +140,6 @@ class Player:
         self.end_gameweek = None
         self.finished = None
     def add_all(self):
-        print("this is the user_league", self.add_user_league)
-        print(self.user_selections)
         qry.qry_add_user_league(self.add_user_league[0], self.add_user_league[1])
         self.add_user_league = []
 
@@ -146,8 +149,6 @@ class Player:
         self.start_gameweek = None
         self.end_gameweek = None
     def set_user_selections(self, selection_lis):
-        print("this is the selection lis ", selection_lis)
-        print("this is the total lis", self.user_selections)
         if self.user_selections == None:
             print("true")
             self.user_selections = [selection_lis]
@@ -191,4 +192,5 @@ class Player:
         self.add_user_league = [user_id_, league_id_]
     def remove_my_user(self):
         self.my_user = None
+
 

@@ -93,12 +93,9 @@ class Registration(tk.Frame):
         self.controller.show_home_page(id)
 
     def show_error(self, message):
-        print(message)
         self.message_label['text'] = message
         self.message_label['foreground'] = 'red'
         self.message_label.after(3000, self.hide_message)
-        lis = [message, "hello"]
-        print(lis)
         if (message == ValueError('Username is invalid')) or (message == "Username already exists"):
             print("found true")
             self.username_entry['foreground'] = 'red'

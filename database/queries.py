@@ -19,6 +19,8 @@ def qry_add_user(first_name_, last_name_, username_, password_):
             sess.commit()
     except:
         raise ValueError("Username already exists")
+
+
 def qry_add_league(gameweek_id_, league_name_):
     print("added")
     with Session(engine) as sess:
@@ -47,20 +49,22 @@ def qry_get_gameweek_id():
 
 
 def qry_add_user_league(user_id_, league_id_):
-    with Session(engine) as sess:
-        user_league_value = UserLeague(user_id=user_id_, league_id=league_id_)
-        sess.add(user_league_value)
-        sess.commit()
+    try:
+        with Session(engine) as sess:
+            user_league_value = UserLeague(user_id=user_id_, league_id=league_id_)
+            sess.add(user_league_value)
+            sess.commit()
+    except:
+        raise ValueError("League not found")
 
 
 def qry_add_selection_list(user_selections):
     with Session(engine) as sess:
-
         sess.add_all(user_selections)
         sess.commit()
 
 
-#def qry_add_selection(gameweek_id_, user_id_, team_id_, league_id_):
+# def qry_add_selection(gameweek_id_, user_id_, team_id_, league_id_):
 #    with Session(engine) as sess:
 #        user_selection = Selection(gameweek_id=gameweek_id_, outcome=None, user_id=user_id_, team_id=team_id_,
 #                                   league_id=league_id_)
@@ -78,10 +82,12 @@ def qry_get_teams():
 
 
 def qry_get_league_starting_gameweek(league_id_):
-    with Session(engine) as sess:
-        gameweek = sess.query(League.gameweek_id).filter_by(league_id=league_id_).first()
-    return gameweek[0]
-
+    try:
+        with Session(engine) as sess:
+            gameweek = sess.query(League.gameweek_id).filter_by(league_id=league_id_).first()
+        return gameweek[0]
+    except:
+        raise ValueError("League not found")
 
 def qry_get_final_league_gameweek():
     with Session(engine) as sess:
@@ -127,11 +133,19 @@ def qry_get_user_ids(league_id_):
 
 def qry_get_selection(league_id_, user_id_):
     with Session(engine) as sess:
-        selections = sess.query(Selection.user_id, Selection.team_id, Selection.gameweek_id).filter_by(league_id=league_id_).all()
+        selections = sess.query(Selection.user_id, Selection.team_id, Selection.gameweek_id).filter_by(
+            league_id=league_id_).all()
     return selections
+
 
 def qry_get_games(user_id_, league_id_):
     with Session(engine) as sess:
-        selections = sess.query(Selection.team_id, Selection.gameweek_id).filter_by(league_id=league_id_, user_id=user_id_).all()
-    print("this is a seletion: ",selections)
+        selections = sess.query(Selection.team_id, Selection.gameweek_id).filter_by(league_id=league_id_,
+                                                                                    user_id=user_id_).all()
+    print("this is a seletion: ", selections)
     return selections
+
+def qry_check_in_league(user_id_, league_id_):
+    with Session(engine) as sess:
+        selection = sess.query(UserLeague.user_league_id).filter_by(league_id=league_id_, user_id=user_id_).all()
+    return selection

@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="eb7dba12-0151-48a3-a729-3fc9e5b6354a" name="Changes" comment="login">
+      <change beforePath="$PROJECT_DIR$/.idea/AQA_actual_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AQA_actual_project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/196c15a4-05ef-4930-bd56-fe1be3ba080d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/196c15a4-05ef-4930-bd56-fe1be3ba080d.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI/home_screen_GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/home_screen_GUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/registration_GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/registration_GUI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/select_teams_GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/select_teams_GUI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TkApplication.py" beforeDir="false" afterPath="$PROJECT_DIR$/TkApplication.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/game_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/game_objects.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/fantasy_football.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/database/fantasy_football.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/queries.py" beforeDir="false" afterPath="$PROJECT_DIR$/database/queries.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,23 +30,41 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
   <component name="ProjectId" id="2bSP7sk92C3QeBI18OCXkqfs7II" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.TkApplication.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/GUI/images" />
     </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-d68999036c7f-b11f5e8da5ad-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.14475.56" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -127,11 +155,11 @@
     <option name="LAST_COMMIT_MESSAGE" value="login" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/AQA_actual_project$create_database.coverage" NAME="create_database Coverage Results" MODIFIED="1709475377670" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/database" />
-    <SUITE FILE_PATH="coverage/AQA_actual_project$write_to_database.coverage" NAME="write_to_database Coverage Results" MODIFIED="1709475380544" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/database" />
-    <SUITE FILE_PATH="coverage/AQA_actual_project$registration_GUI.coverage" NAME="registration_GUI Coverage Results" MODIFIED="1709551136752" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GUI" />
-    <SUITE FILE_PATH="coverage/AQA_actual_project$TkApplication.coverage" NAME="TkApplication Coverage Results" MODIFIED="1709553390537" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AQA_actual_project$sign_in_GUI.coverage" NAME="sign_in_GUI Coverage Results" MODIFIED="1709472592962" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GUI" />
+    <SUITE FILE_PATH="coverage/AQA_actual_project$registration_GUI.coverage" NAME="registration_GUI Coverage Results" MODIFIED="1709551136752" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GUI" />
+    <SUITE FILE_PATH="coverage/AQA_actual_project$create_database.coverage" NAME="create_database Coverage Results" MODIFIED="1709475377670" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/database" />
+    <SUITE FILE_PATH="coverage/AQA_actual_project$TkApplication.coverage" NAME="TkApplication Coverage Results" MODIFIED="1709556763152" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AQA_actual_project$game_objects.coverage" NAME="game_objects Coverage Results" MODIFIED="1707861325289" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classes" />
+    <SUITE FILE_PATH="coverage/AQA_actual_project$write_to_database.coverage" NAME="write_to_database Coverage Results" MODIFIED="1709475380544" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/database" />
   </component>
 </project>

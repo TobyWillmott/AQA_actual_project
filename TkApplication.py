@@ -58,6 +58,8 @@ class TkApplication(tk.Tk):
         frame_to_show.pack(expand=True, fill=tk.BOTH)
 
     def show_league_selection_page(self, user_id, league_id, gameweek_id):
+        self.game.check_in_league(user_id, league_id)
+
         widgets = self.winfo_children()
         for w in widgets:
             if w.winfo_class() == "Frame":

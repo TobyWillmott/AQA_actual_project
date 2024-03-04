@@ -40,6 +40,8 @@ class HomeScreen(tk.Frame):
         self.gameweek_drop_down_menu = tk.OptionMenu(self, self.gameweek_var, *self.gameweek_timings)
         self.gameweek_drop_down_menu.config(bg="#E5E5E5", fg="black")
 
+        self.message_label = tk.Label(self, text='', foreground='red', bg="#E5E5E5")
+
         self.profile_image = tk.PhotoImage(file=r"GUI/images/profile.png").subsample(10,10)
         self.profile_button = tk.Button(self, image=self.profile_image, command=self.profile_clicked, highlightbackground="#E5E5E5", relief="flat", bg="#E5E5E5")
 
@@ -51,6 +53,7 @@ class HomeScreen(tk.Frame):
         self.join_league_entry.place(x=20, y=80)
         self.join_league_button.place(x=20, y=110)
         self.join_league_text.place(x=20, y=50)
+        self.message_label.place(x=20, y = 150)
 
         self.league_id_label.place(x=400, y=50)
         self.league_name_label.place(x=500, y=50)
@@ -68,11 +71,19 @@ class HomeScreen(tk.Frame):
         self.profile_button.place(x=768, y=0)
 
     def join_league_clicked(self):
-        #self.controller.add_user_league(self.user_id, self.join_league_var.get())
-        current_gameweek = self.controller.get_league_starting_gameweek(self.join_league_var.get())
-        self.controller.show_league_selection_page(self.user_id, self.join_league_var.get(), current_gameweek)
+        try:
+            current_gameweek = self.controller.get_league_starting_gameweek(self.join_league_var.get())
+            self.controller.show_league_selection_page(self.user_id, self.join_league_var.get(), current_gameweek)
+        except ValueError as error:
+            self.show_join_league_error(error)
 
+    def show_join_league_error(self, error):
+        self.message_label['text'] = error
+        self.message_label['foreground'] = 'red'
+        self.message_label.after(3000, self.hide_message)
 
+    def hide_message(self):
+        self.message_label['text'] = ''
     def create_league_clicked(self):
         self.controller.show_create_league_page(self.user_id)
 
@@ -99,7 +110,6 @@ class HomeScreen(tk.Frame):
         self.sign_out_button.place(x=700, y=20)
     def create_button_clicked(self):
         gameweek_id = self.get_gameweek_id_final()
-        print("stuff", gameweek_id, self.league_name_entry.get())
         self.controller.add_league(gameweek_id, self.league_name_entry.get())
         league_gameweek = self.controller.get_final_league_gameweek()
         #self.controller.add_user_league(self.user_id, league_gameweek[0])
