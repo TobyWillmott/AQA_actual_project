@@ -51,6 +51,7 @@ def get_games(user_selections):
 
     game_data = []
     for team_id, gameweek_id in user_selections:
+        print("user selection: ", user_selections)
         for match in data:
             if match["event"] == gameweek_id and (match["team_a"] == team_id or match["team_h"] == team_id):
                 if match["team_a"] == team_id:
@@ -61,4 +62,6 @@ def get_games(user_selections):
                     team_a_id = match["team_a"]
                     game_data.append([gameweek_id, team_id, match["team_h_score"], match["team_h_difficulty"], match["team_a"],
                          match["team_a_score"], match["team_a_difficulty"]])
+            print("game data", game_data)
+    print("game data", game_data)
     return game_data

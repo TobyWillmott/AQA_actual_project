@@ -68,9 +68,10 @@ class HomeScreen(tk.Frame):
         self.profile_button.place(x=768, y=0)
 
     def join_league_clicked(self):
-        self.controller.add_user_league(self.user_id, self.join_league_var.get())
+        #self.controller.add_user_league(self.user_id, self.join_league_var.get())
         current_gameweek = self.controller.get_league_starting_gameweek(self.join_league_var.get())
         self.controller.show_league_selection_page(self.user_id, self.join_league_var.get(), current_gameweek)
+
 
     def create_league_clicked(self):
         self.controller.show_create_league_page(self.user_id)

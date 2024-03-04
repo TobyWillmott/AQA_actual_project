@@ -96,6 +96,7 @@ class Game:
 
     def get_games(self, user_id, league_id):
         user_selections = qry.qry_get_games(user_id, league_id)
+        print("user selections: ", user_selections)
         games = api.get_games(user_selections)
         for gameweek in games:
             user_team = qry.qry_id_to_team(gameweek[1])
@@ -156,8 +157,8 @@ class Player:
                 Selection(gameweek_id=selection_lis[0], outcome=None, user_id=selection_lis[1],
                           team_id=selection_lis[2],
                           league_id=selection_lis[3]))
-            if selection_lis[0] + 20 > 40:
-                self.end_gameweek = 40
+            if selection_lis[0] + 20 > 38:
+                self.end_gameweek = 38
             else:
                 self.end_gameweek = self.start_gameweek + 19
             print(self.user_selections)
