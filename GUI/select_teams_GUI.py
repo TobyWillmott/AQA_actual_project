@@ -1,13 +1,15 @@
 import tkinter as tk
 from functools import partial
 from database.models import Selection
-
+from GUI.vertical_scrolled_frame import VerticalScrolledFrame
 
 class SelectTeams(tk.Frame):
     def __init__(self, parent, user_id, league_id, gameweek_id):
         super().__init__(parent)
 
         self.config(background="#E5E5E5")
+
+        self.matches_frame = VerticalScrolledFrame(self, width=80, height=310, bg="#E5E5E5", highlightbackground="black", highlightthickness=3)
 
         self.images = {"view": tk.PhotoImage(file=r"GUI/images/view.png").subsample(19, 19),
                        "hide": tk.PhotoImage(file=r"GUI/images/hide.png").subsample(19, 19),
@@ -54,6 +56,7 @@ class SelectTeams(tk.Frame):
         self.place_widgets()
 
     def place_widgets(self):
+        self.matches_frame.place(x=680, y=20)
         self.gameweek_label.place(x=75, y=10)
         index = 0
         row_index = 0
@@ -76,15 +79,15 @@ class SelectTeams(tk.Frame):
             away_difficulty = self.calculate_colour(match[3])
             lis = [self.controller.id_to_team(match[0]), self.controller.id_to_team(match[2]), home_difficulty, away_difficulty]
             matches_teams.append(lis)
-        index = 0
-        self.home_teams = [tk.Label(self, text=match[0], fg="black", bg=match[2], width=3) for match in matches_teams]
-        self.away_teams = [tk.Label(self, text=match[1], fg="black", bg=match[3], width=3) for match in matches_teams]
-        self.versus_label = [tk.Label(self, text="vs", fg="black", bg="#E5E5E5") for j in range(len(matches))]
+
+        self.home_teams = [tk.Label(self.matches_frame, text=match[0], fg="black", bg=match[2], width=3) for match in matches_teams]
+        self.away_teams = [tk.Label(self.matches_frame, text=match[1], fg="black", bg=match[3], width=3) for match in matches_teams]
+        self.versus_label = [tk.Label(self.matches_frame, text="vs", fg="black", bg="#E5E5E5") for j in range(len(matches))]
         for i in range(len(matches)):
-            self.home_teams[i].place(x=685, y=50+index*30)
-            self.away_teams[i].place(x=750, y=50+index*30)
-            self.versus_label[i].place(x=727, y=50+index*30)
-            index += 1
+            self.home_teams[i].grid(row=i, column=0)
+            self.away_teams[i].grid(row=i, column=2)
+            self.versus_label[i].grid(row=i, column=1)
+
     def calculate_colour(self, difficulty):
         if difficulty==1:
             colour="#2cba00"
@@ -114,13 +117,13 @@ class SelectTeams(tk.Frame):
             lis = [self.controller.id_to_team(match[0]), self.controller.id_to_team(match[2]), home_difficulty,
                    away_difficulty]
             matches_teams.append(lis)
-        index = 0
+
         for i in range(len(matches)):
             self.home_teams[i].configure(text=matches_teams[i][0], bg=matches_teams[i][2])
             self.away_teams[i].configure(text=matches_teams[i][1], bg=matches_teams[i][3])
-            self.home_teams[i].place(x=685, y=50+index*30)
-            self.away_teams[i].place(x=750, y=50+index*30)
-            index += 1
+            self.home_teams[i].grid(row=i, column=0)
+            self.away_teams[i].grid(row=i, column=2)
+
 
     def get_teams(self):
         teams_lis = []
