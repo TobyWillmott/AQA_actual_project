@@ -66,6 +66,7 @@ class TkApplication(tk.Tk):
         frame_to_show.pack(expand=True, fill=tk.BOTH)
 
     def show_view_league_page(self, user_id, league_id):
+        self.geometry("800x800")
         widgets = self.winfo_children()
         for w in widgets:
             if w.winfo_class() == "Frame":

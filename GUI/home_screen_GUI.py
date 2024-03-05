@@ -1,6 +1,6 @@
 import tkinter as tk
 from functools import partial
-from GUI.verticle_scrolled_frame import VerticalScrolledFrame
+from GUI.vertical_scrolled_frame import VerticalScrolledFrame
 class HomeScreen(tk.Frame):
     def __init__(self, parent, user_id):
         super().__init__(parent)
