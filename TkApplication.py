@@ -1,10 +1,9 @@
 from GUI.registration_GUI import Registration
 from GUI.welcome_GUI import WelcomeScreen
 from GUI.sign_in_GUI import SignIn
-from GUI.create_league_GUI import CreateLeague
 import tkinter as tk
 from sqlalchemy import create_engine
-
+from GUI.rules_GUI import Rules
 from GUI.home_screen_GUI import HomeScreen
 from GUI.select_teams_GUI import SelectTeams
 from GUI.view_league_GUI import ViewLeague
@@ -48,15 +47,13 @@ class TkApplication(tk.Tk):
         frame_to_show = HomeScreen(self, user_id)
         frame_to_show.pack(expand=True, fill=tk.BOTH)
 
-    def show_create_league_page(self, user_id):
+    def show_rules_page(self, user_id):
         widgets = self.winfo_children()
         for w in widgets:
             if w.winfo_class() == "Frame":
                 w.pack_forget()
-
-        frame_to_show = CreateLeague(self, user_id)
+        frame_to_show = Rules(self, user_id)
         frame_to_show.pack(expand=True, fill=tk.BOTH)
-
     def show_league_selection_page(self, user_id, league_id, gameweek_id):
         self.game.check_in_league(user_id, league_id)
 

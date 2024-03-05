@@ -69,6 +69,7 @@ class Registration(tk.Frame):
         self.view_button.place(x=538, y=277)
         self.view_button.lift()
 
+
     def view_clicked(self):
         if self.view_button.cget('image')==str(self.images["view"]):
             self.view_button.configure(image=self.images["hide"])

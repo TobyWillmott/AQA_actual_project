@@ -9,6 +9,7 @@ class WelcomeScreen(tk.Frame):
         self.welcome_label = tk.Label(self, text="Username:")
         self.sign_in_button = tk.Button(self, text="Sign in", command=self.sign_in_clicked)
         self.register_button = tk.Button(self, text="Register", command=self.register_clicked)
+
         self.place_widgets()
 
     def place_widgets(self):
