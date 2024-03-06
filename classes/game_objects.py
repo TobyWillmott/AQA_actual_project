@@ -150,6 +150,12 @@ class Player:
         self.end_gameweek = None
     def set_user_selections(self, selection_lis):
         if self.user_selections == None:
+            if selection_lis[0] + 20 > 38:
+                self.end_gameweek = 38
+            else:
+                self.end_gameweek = self.start_gameweek + 19
+            if selection_lis[0] > self.end_gameweek:
+                raise ValueError("Gameweek has finished")
             print("true")
             self.user_selections = [selection_lis]
             self.start_gameweek = selection_lis[0]
@@ -158,19 +164,11 @@ class Player:
                 Selection(gameweek_id=selection_lis[0], outcome=None, user_id=selection_lis[1],
                           team_id=selection_lis[2],
                           league_id=selection_lis[3]))
-            if selection_lis[0] + 20 > 38:
-                self.end_gameweek = 38
-            else:
-                self.end_gameweek = self.start_gameweek + 19
-            print(self.user_selections)
         else:
-            print(self.end_gameweek)
-            if selection_lis[0] >= self.end_gameweek:
-                print("gamweek has finished")
-                for gameweek in self.user_selections:
-                    if gameweek[2] == selection_lis[2]:
-                        print("team has been selected")
-                        return "Team has already been selected"
+            print("gameweek",selection_lis[0], "end gameweek:", self.end_gameweek)
+            if selection_lis[0] > self.end_gameweek:
+                raise ValueError("Gameweek has finished")
+            elif selection_lis[0] == self.end_gameweek:
                 self.user_selections_db.append(
                     Selection(gameweek_id=selection_lis[0], outcome=None, user_id=selection_lis[1],
                               team_id=selection_lis[2],

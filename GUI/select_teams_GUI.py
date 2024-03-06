@@ -117,12 +117,24 @@ class SelectTeams(tk.Frame):
             lis = [self.controller.id_to_team(match[0]), self.controller.id_to_team(match[2]), home_difficulty,
                    away_difficulty]
             matches_teams.append(lis)
+        for match in range(len(self.home_teams)):
+            self.home_teams[match].destroy()
+            self.away_teams[match].destroy()
+            self.versus_label[match].destroy()
+
+        self.home_teams = [tk.Label(self.matches_frame, text=match[0], fg="black", bg=match[2], width=3) for match in
+                           matches_teams]
+        self.away_teams = [tk.Label(self.matches_frame, text=match[1], fg="black", bg=match[3], width=3) for match in
+                           matches_teams]
+        self.versus_label = [tk.Label(self.matches_frame, text="vs", fg="black", bg="#E5E5E5") for j in
+                             range(len(matches))]
 
         for i in range(len(matches)):
-            self.home_teams[i].configure(text=matches_teams[i][0], bg=matches_teams[i][2])
-            self.away_teams[i].configure(text=matches_teams[i][1], bg=matches_teams[i][3])
+            #self.home_teams[i].configure(text=matches_teams[i][0], bg=matches_teams[i][2])
+            #self.away_teams[i].configure(text=matches_teams[i][1], bg=matches_teams[i][3])
             self.home_teams[i].grid(row=i, column=0)
             self.away_teams[i].grid(row=i, column=2)
+            self.versus_label[i].grid(row=i, column=1)
 
 
     def get_teams(self):
@@ -139,22 +151,25 @@ class SelectTeams(tk.Frame):
         self.team_id = team_id
 
     def select_picked(self):
-        selection = [self.current_gameweek_id.get(), self.user_id, self.team_id, self.league_id]
-        selection_index = self.controller.add_user_selections(selection)
-        if selection_index == "Team has already been selected":
-            print("team already selected")
-        else:
-            self.teams_buttons[self.team_id - 1].configure(bg="grey",
-                                                           text=f"{self.teams_id[self.team_id - 1][1]}\n{self.current_gameweek_id.get()}")
-            current_num = self.current_gameweek_id.get()
-            current_num += 1
-            self.current_gameweek_id.set(current_num)
-            if selection_index == "finished":
-                print("finished")
-                self.finished_selection()
-            self.gameweek_label.configure(text=f"The gameweek to choose a team for is {self.current_gameweek_id.get()}")
-            self.display_matches_second()
-
+        try:
+            print("current gameweek", self.current_gameweek_id.get())
+            selection = [self.current_gameweek_id.get(), self.user_id, self.team_id, self.league_id]
+            selection_index = self.controller.add_user_selections(selection)
+            if selection_index == "Team has already been selected":
+                print("team already selected")
+            else:
+                self.teams_buttons[self.team_id - 1].configure(bg="grey",
+                                                               text=f"{self.teams_id[self.team_id - 1][1]}\n{self.current_gameweek_id.get()}")
+                current_num = self.current_gameweek_id.get()
+                current_num += 1
+                self.current_gameweek_id.set(current_num)
+                if selection_index == "finished":
+                    print("finished")
+                    self.finished_selection()
+                self.gameweek_label.configure(text=f"The gameweek to choose a team for is {self.current_gameweek_id.get()}")
+                self.display_matches_second()
+        except ValueError as error:
+            print("this is the error", error)
 
 
     def finished_selection(self):
