@@ -149,6 +149,7 @@ class Player:
         self.start_gameweek = None
         self.end_gameweek = None
     def set_user_selections(self, selection_lis):
+        self.start_gameweek = selection_lis[0]
         if self.user_selections == None:
             if selection_lis[0] + 20 > 38:
                 self.end_gameweek = 38
@@ -158,7 +159,6 @@ class Player:
                 raise ValueError("Gameweek has finished")
             print("true")
             self.user_selections = [selection_lis]
-            self.start_gameweek = selection_lis[0]
             self.set_user_league(selection_lis[1], selection_lis[3])
             self.user_selections_db.append(
                 Selection(gameweek_id=selection_lis[0], outcome=None, user_id=selection_lis[1],

@@ -51,7 +51,7 @@ class HomeScreen(tk.Frame):
         self.gameweek_var.set(self.gameweek_timings[0])
         self.gameweek_drop_down_menu = tk.OptionMenu(self.create_league_frame, self.gameweek_var, *self.gameweek_timings)
         self.gameweek_drop_down_menu.config(bg="grey", fg="black", relief="flat", highlightbackground="#E5E5E5")
-
+        4
         self.rules_button = tk.Button(self, text="Game Rules", command=self.rules_button_clicked, highlightbackground="#E5E5E5", relief="flat", bg="grey", activebackground="#545354")
 
         self.profile_image = tk.PhotoImage(file=r"GUI/images/profile.png").subsample(10,10)

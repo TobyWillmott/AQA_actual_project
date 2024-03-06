@@ -51,7 +51,7 @@ class SelectTeams(tk.Frame):
         self.gameweek_label = tk.Label(self,
                                        text=f"Please choose a team for gameweek {self.current_gameweek_id.get()}", fg="black", bg="#E5E5E5", font=('Arial', 25))
         self.select_button = tk.Button(self, text="Confirm", command=self.select_picked, highlightbackground="#E5E5E5", padx=19, pady=10)
-        self.back_button = tk.Button(self, text="Back", bg="#E5E5E5", command=self.back_clicked)
+        self.back_button = tk.Button(self, text="Cancel League", bg="grey", command=self.back_clicked, relief="flat", activebackground="#545354", highlightbackground="#E5E5E5")
         self.user_selection = []
         self.place_widgets()
 
@@ -68,7 +68,7 @@ class SelectTeams(tk.Frame):
             column_index += 1
             index += 1
         self.select_button.place(x=675, y=344)
-        self.back_button.place(x=0, y=0)
+        self.back_button.place(x=10, y=10)
         self.display_matches()
 
     def display_matches(self):
