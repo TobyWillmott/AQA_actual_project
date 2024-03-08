@@ -9,7 +9,7 @@ class SelectTeams(tk.Frame):
 
         self.config(background="#E5E5E5")
 
-        self.matches_frame = VerticalScrolledFrame(self, width=80, height=310, bg="#E5E5E5", highlightbackground="black", highlightthickness=3)
+        self.matches_frame = VerticalScrolledFrame(self, width=80, height=280, bg="#E5E5E5", highlightbackground="black", highlightthickness=3)
 
         self.images = {"view": tk.PhotoImage(file=r"GUI/images/view.png").subsample(19, 19),
                        "hide": tk.PhotoImage(file=r"GUI/images/hide.png").subsample(19, 19),
@@ -46,7 +46,7 @@ class SelectTeams(tk.Frame):
                            "Wolverhampton Wanderers": tk.PhotoImage(file=r"GUI/images/Wolverhampton Wanderers.png").subsample(2, 2),
                            }
         self.teams_buttons = [
-            tk.Button(self, bg="white", text=f"{name}\n", font=('Arial', 10), fg="black", image=self.team_crest[name],
+            tk.Button(self, bg="white", text=f"{name}\n", font=('Arial', 9), fg="black", image=self.team_crest[name],
                       command=partial(self.choose_team, name), highlightbackground="#E5E5E5", width=125, compound="top", height=65) for name in
             self.teams]
         self.gameweek_label = tk.Label(self,
@@ -68,9 +68,9 @@ class SelectTeams(tk.Frame):
             i.place(x=(column_index % 5) * 135, y=68+(row_index-1) * 83)
             column_index += 1
             index += 1
-        self.select_button.place(x=675, y=344)
+        self.select_button.place(x=678, y=344)
         self.back_button.place(x=10, y=10)
-        self.message_label.place(x=500, y=30)
+        self.message_label.place(x=678, y=320)
         self.display_matches()
 
     def display_matches(self):

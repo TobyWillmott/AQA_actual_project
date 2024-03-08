@@ -51,7 +51,7 @@ class HomeScreen(tk.Frame):
         self.gameweek_var.set(self.gameweek_timings[0])
         self.gameweek_drop_down_menu = tk.OptionMenu(self.create_league_frame, self.gameweek_var, *self.gameweek_timings)
         self.gameweek_drop_down_menu.config(bg="grey", fg="black", relief="flat", highlightbackground="#E5E5E5")
-        self.create_message_label = tk.Label(self.join_league_tab, text='asdfasdf', foreground='red', bg="#E5E5E5")
+        self.create_message_label = tk.Label(self.create_league_frame, text='', foreground='red', bg="#E5E5E5")
 
         self.rules_button = tk.Button(self, text="Game Rules", command=self.rules_button_clicked, highlightbackground="#E5E5E5", relief="flat", bg="grey", activebackground="#545354")
 
@@ -91,7 +91,7 @@ class HomeScreen(tk.Frame):
         self.gameweek_label.place(x=10, y=94)
         self.gameweek_drop_down_menu.place(x=10, y=113)
         self.create_league_button.place(x=10, y=146)
-        self.create_message_label.place(x=40, y=600)
+        self.create_message_label.place(x=170, y=105)
 
         self.profile_button.place(x=768, y=0)
         self.rules_button.place(x=10, y=10)
@@ -110,8 +110,12 @@ class HomeScreen(tk.Frame):
 
     def hide_message(self):
         self.join_message_label['text'] = ''
-    def create_league_clicked(self):
-        self.controller.show_create_league_page(self.user_id)
+        self.create_message_label["text"] = ""
+
+    def show_create_league_error(self, error):
+        self.create_message_label['text'] = error
+        self.create_message_label['foreground'] = 'red'
+        self.create_message_label.after(3000, self.hide_message)
 
     def view_league_clicked(self, league_id):
         self.controller.show_view_league_page(self.user_id, league_id)
@@ -134,14 +138,20 @@ class HomeScreen(tk.Frame):
     def rules_button_clicked(self):
         self.controller.show_rules_page(self.user_id)
     def profile_clicked(self):
-        self.sign_out_button = tk.Button(self, text="Sign Out", command=self.sign_out_clicked, highlightbackground="#E5E5E5")
-        self.sign_out_button.place(x=700, y=20)
+        self.sign_out_button = tk.Button(self, text="Sign Out", command=self.sign_out_clicked,  highlightbackground="#E5E5E5", relief="flat", bg="grey", activebackground="#545354")
+        self.sign_out_button.place(x=700, y=10)
+        self.sign_out_button.after(3000, self.hide_sign_out)
+    def hide_sign_out(self):
+        self.sign_out_button.destroy()
     def create_button_clicked(self):
-        gameweek_id = self.get_gameweek_id_final()
-        self.controller.add_league(gameweek_id, self.league_name_entry.get())
-        league_gameweek = self.controller.get_final_league_gameweek()
-        #self.controller.add_user_league(self.user_id, league_gameweek[0])
-        self.controller.show_league_selection_page(self.user_id, league_gameweek[0], gameweek_id)
+        try:
+            gameweek_id = self.get_gameweek_id_final()
+            self.controller.add_league(gameweek_id, self.league_name_entry.get())
+            league_gameweek = self.controller.get_final_league_gameweek()
+            #self.controller.add_user_league(self.user_id, league_gameweek[0])
+            self.controller.show_league_selection_page(self.user_id, league_gameweek[0], gameweek_id)
+        except ValueError as error:
+            self.show_create_league_error(error)
 
     def sign_out_clicked(self):
         self.controller.show_frame("sign_in_frame")

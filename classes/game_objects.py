@@ -14,13 +14,6 @@ class Game:
 
     def __init__(self):
         self.user = None
-        self.user_selections = None
-        self.user_selections_db = []
-        self.add_league_lis = []
-        self.add_user_league = []
-        self.start_gameweek = None
-        self.end_gameweek = None
-        self.finished = None
 
     def add_user(self, first_name_, last_name_, username_, password_):
         username_pattern = "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$"
@@ -36,6 +29,10 @@ class Game:
         qry.qry_add_user(first_name_, last_name_, username_, password_)
 
     def add_league(self, gameweek_id_, league_name_):
+        if league_name_ == "":
+            raise ValueError("You must enter \n a league name")
+        if len(league_name_)>20:
+            raise ValueError("League name too long")
         qry.qry_add_league(gameweek_id_, league_name_)
 
     def set_user(self, id):

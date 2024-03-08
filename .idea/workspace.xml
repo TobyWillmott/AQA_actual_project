@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb7dba12-0151-48a3-a729-3fc9e5b6354a" name="Changes" comment="login">
-      <change beforePath="$PROJECT_DIR$/.idea/AQA_actual_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AQA_actual_project.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/196c15a4-05ef-4930-bd56-fe1be3ba080d.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/home_screen_GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/home_screen_GUI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI/select_teams_GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/select_teams_GUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI/sign_in_GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/sign_in_GUI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/game_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/game_objects.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/fantasy_football.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/database/fantasy_football.sqlite" afterDir="false" />
     </list>
@@ -89,6 +86,7 @@
       <workItem from="1709654979830" duration="4248000" />
       <workItem from="1709804018433" duration="942000" />
       <workItem from="1709896426411" duration="2813000" />
+      <workItem from="1709900085118" duration="2198000" />
     </task>
     <task id="LOCAL-00001" summary="yeah">
       <created>1706262395011</created>
@@ -172,7 +170,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="login" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/AQA_actual_project$TkApplication.coverage" NAME="TkApplication Coverage Results" MODIFIED="1709899255935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AQA_actual_project$TkApplication.coverage" NAME="TkApplication Coverage Results" MODIFIED="1709902687133" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AQA_actual_project$create_database.coverage" NAME="create_database Coverage Results" MODIFIED="1709475377670" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/database" />
     <SUITE FILE_PATH="coverage/AQA_actual_project$game_objects.coverage" NAME="game_objects Coverage Results" MODIFIED="1707861325289" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classes" />
     <SUITE FILE_PATH="coverage/AQA_actual_project$view_league_GUI.coverage" NAME="view_league_GUI Coverage Results" MODIFIED="1709658775457" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GUI" />
