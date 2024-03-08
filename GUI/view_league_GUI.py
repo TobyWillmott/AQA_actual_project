@@ -9,7 +9,7 @@ class ViewLeague(tk.Frame):
                        "hide": tk.PhotoImage(file=r"GUI/images/hide.png").subsample(19, 19),
                        "back": tk.PhotoImage(file=r"GUI/images/back_button.png").subsample(19, 19)}
 
-        self.players_frame = VerticalScrolledFrame(self, width=250, height=700, bg="#E5E5E5",
+        self.players_frame = VerticalScrolledFrame(self, width=350, height=700, bg="#E5E5E5",
                                                    highlightbackground="black", highlightthickness=3)
         self.selections_frame = VerticalScrolledFrame(self, width=300, height=700, bg="#E5E5E5",
                                                       highlightbackground="black", highlightthickness=3)
@@ -21,7 +21,7 @@ class ViewLeague(tk.Frame):
 
         self.user_ids = self.controller.get_user_ids(self.league_id)
         self.user_names = self.controller.get_user_name(self.user_ids)
-        self.lives = self.controller.check_lives(self.user_ids, self.league_id)
+        self.points = self.controller.check_points(self.user_ids, self.league_id)
 
         self.league_name = self.controller.get_league_name(self.league_id)
         self.league_title = tk.Label(self, text=f"{self.league_name}", bg="#E5E5E5", font=('Arial', 15))
@@ -31,7 +31,7 @@ class ViewLeague(tk.Frame):
             lis = []
             lis.append(self.user_ids[i][0])
             lis.append(self.user_names[i])
-            lis.append(self.lives[i])
+            lis.append(self.points[i])
             self.total_list.append(lis)
         self.total_list.sort(reverse=True, key=lambda x: x[2])
         self.position_label = tk.Label(self.players_frame, text="Positon", bg="#E5E5E5")

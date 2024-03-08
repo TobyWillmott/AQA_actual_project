@@ -5,6 +5,7 @@ from database.models import Base, User, Selection
 from sqlalchemy.orm import Session
 import hashlib
 import re
+from datetime import datetime
 
 engine = create_engine("sqlite:///database/fantasy_football.sqlite", echo=True)
 Base.metadata.create_all(engine)
@@ -14,6 +15,7 @@ class Game:
 
     def __init__(self):
         self.user = None
+        self.time = datetime.now
 
     def add_user(self, first_name_, last_name_, username_, password_):
         username_pattern = "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$"
@@ -37,20 +39,24 @@ class Game:
 
     def set_user(self, id):
         self.player = Player(id)
-    def get_gameweek_timings(self):
-        return qry.qry_get_gameweek_timings()
+    #def get_gameweek_timings(self):
+    #    timings = qry.qry_get_gameweek_timings()
+    #    print("timings hello", timings)
+    #    return timings
 
     def add_user_selections(self, selection_lis):
         return self.player.set_user_selections(selection_lis)
 
     def get_gameweek_id(self):
-        return qry.qry_get_gameweek_id()
+        timings = qry.qry_get_gameweek_id()
+        updated_timings = []
+        for gameweek in timings:
+            if gameweek[1]>datetime.now():
+                updated_timings.append(gameweek)
+        return updated_timings
 
     def get_username_details(self, username_entry):
         return qry.qry_get_username_details(username_entry)
-
-#    def add_selection(self, gameweek_id_, user_id_, team_id_, league_id_):
-#        qry.qry_add_selection(gameweek_id_, user_id_, team_id_, league_id_)
 
     def get_teams(self):
         return qry.qry_get_teams()
@@ -79,12 +85,13 @@ class Game:
     def match_info(self, game_week_id):
         return api.api_match_info(game_week_id)
 
-    def check_lives(self, user_ids, league_id):
+    def check_points(self, user_ids, league_id):
         selection_lis = []
         for user in user_ids:
-            selection = self.get_selection(league_id, user)
+
+            selection = self.get_selection(league_id, user[0])
             selection_lis.append(selection)
-        return api.api_check_lives(user_ids, league_id, selection_lis)
+        return api.api_check_points(user_ids, league_id, selection_lis)
     def hash_password(self, password):
         if password == "":
             return False
@@ -95,7 +102,6 @@ class Game:
 
     def get_games(self, user_id, league_id):
         user_selections = qry.qry_get_games(user_id, league_id)
-        print("user selections: ", user_selections)
         games = api.get_games(user_selections)
         for gameweek in games:
             user_team = qry.qry_id_to_team(gameweek[1])
@@ -106,7 +112,6 @@ class Game:
             gameweek[4] = opp_team
             gameweek[3] = user_difficulty
             gameweek[6] = opp_difficulty
-        print("games: ",games)
         return games
 
     def id_to_colour(self, difficulty):
@@ -121,9 +126,14 @@ class Game:
         elif difficulty==5:
             colour="#ff0000"
         return colour
-    def check_in_league(self, user_id, league_id):
+    def check_error_joining(self, user_id, league_id, gameweek_id):
         if qry.qry_check_in_league(user_id, league_id) != []:
             raise ValueError("Already in league")
+        starting_time = qry.qry_get_league_starting_datetime(gameweek_id)
+        print("gameweek", starting_time)
+        print("datetime", datetime.now())
+        if starting_time<datetime.now():
+            raise ValueError("League has already started")
 
     def get_league_name(self, league_id):
         return qry.qry_get_league_name(league_id)
@@ -157,7 +167,6 @@ class Player:
                 self.end_gameweek = self.start_gameweek + 19
             if selection_lis[0] > self.end_gameweek:
                 raise ValueError("Gameweek has finished")
-            print("true")
             self.user_selections = [selection_lis]
             self.set_user_league(selection_lis[1], selection_lis[3])
             self.user_selections_db.append(
@@ -165,7 +174,6 @@ class Player:
                           team_id=selection_lis[2],
                           league_id=selection_lis[3]))
         else:
-            print("gameweek",selection_lis[0], "end gameweek:", self.end_gameweek)
             if selection_lis[0] > self.end_gameweek:
                 raise ValueError("League has finished")
             elif selection_lis[0] == self.end_gameweek:
@@ -177,7 +185,6 @@ class Player:
                 self.add_all()
                 return "finished"
             else:
-                print(self.user_selections, "\n")
                 for gameweek in self.user_selections:
                     if gameweek[2] == selection_lis[2]:
                         return "Team has already been selected"

@@ -22,7 +22,6 @@ def qry_add_user(first_name_, last_name_, username_, password_):
 
 
 def qry_add_league(gameweek_id_, league_name_):
-    print("added")
     with Session(engine) as sess:
         league = League(gameweek_id=gameweek_id_, league_name=league_name_)
         sess.add(league)
@@ -36,10 +35,10 @@ def qry_get_username_details(username_entry):
     return output_lis
 
 
-def qry_get_gameweek_timings():
-    with Session(engine) as sess:
-        output_lis = sess.query(Gameweek.start_date).all()
-    return output_lis
+#def qry_get_gameweek_timings():
+#    with Session(engine) as sess:
+#        output_lis = sess.query(Gameweek.start_date).all()
+#    return output_lis
 
 
 def qry_get_gameweek_id():
@@ -134,7 +133,7 @@ def qry_get_user_ids(league_id_):
 def qry_get_selection(league_id_, user_id_):
     with Session(engine) as sess:
         selections = sess.query(Selection.user_id, Selection.team_id, Selection.gameweek_id).filter_by(
-            league_id=league_id_).all()
+            league_id=league_id_, user_id=user_id_).all()
     return selections
 
 
@@ -153,3 +152,9 @@ def qry_get_league_name(league_id):
     with Session(engine) as sess:
         selection = sess.query(League.league_name).filter_by(league_id=league_id).first()
     return selection[0]
+
+def qry_get_league_starting_datetime(gameweek_id_):
+    with Session(engine) as sess:
+        gameweek = sess.query(Gameweek.start_date).filter_by(gameweek_id=gameweek_id_).first()
+    return gameweek[0]
+

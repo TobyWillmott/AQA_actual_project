@@ -98,7 +98,6 @@ class Registration(tk.Frame):
         self.message_label['foreground'] = 'red'
         self.message_label.after(3000, self.hide_message)
         if (message == ValueError('Username is invalid')) or (message == "Username already exists"):
-            print("found true")
             self.username_entry['foreground'] = 'red'
         if message == "Password is invalid, Must have minimum eight characters, at least one letter and one number":
             self.password_entry['foreground'] = 'red'

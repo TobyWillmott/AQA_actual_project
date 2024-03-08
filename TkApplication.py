@@ -55,7 +55,7 @@ class TkApplication(tk.Tk):
         frame_to_show = Rules(self, user_id)
         frame_to_show.pack(expand=True, fill=tk.BOTH)
     def show_league_selection_page(self, user_id, league_id, gameweek_id):
-        self.game.check_in_league(user_id, league_id)
+        self.game.check_error_joining(user_id, league_id, gameweek_id)
 
         widgets = self.winfo_children()
         for w in widgets:
@@ -86,8 +86,8 @@ class TkApplication(tk.Tk):
     def get_username_details(self, username_entry):
         return self.game.get_username_details(username_entry)
 
-    def get_gameweek_timings(self):
-        return self.game.get_gameweek_timings()
+    #def get_gameweek_timings(self):
+    #    return self.game.get_gameweek_timings()
 
     def get_gameweek_id(self):
         return self.game.get_gameweek_id()
@@ -123,8 +123,8 @@ class TkApplication(tk.Tk):
     def get_user_ids(self, league_id_):
         return self.game.get_user_ids(league_id_)
 
-    def check_lives(self, user_ids, league_id):
-        return self.game.check_lives(user_ids, league_id)
+    def check_points(self, user_ids, league_id):
+        return self.game.check_points(user_ids, league_id)
     def hash_password(self, password):
         return self.game.hash_password(password)
 

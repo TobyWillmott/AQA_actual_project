@@ -15,14 +15,15 @@ def api_match_info(game_week_id):
     return lis_game_week
 
 
-def api_check_lives(user_ids, league_id, selections):
+def api_check_points(user_ids, league_id, selections):
     url = "https://fantasy.premierleague.com/api/fixtures/"
     lives = []
     response = requests.get(url)
     data = response.json()
-
+    for i in selections:
+        print("this is a selection", i)
     for user in selections:
-        num_lives = 0
+        num_points = 0
         for user_id, team_id, gameweek_id in user:
             for match in data:
                 if match["event"] == gameweek_id and (match["team_a"] == team_id or match["team_h"] == team_id):
@@ -30,17 +31,18 @@ def api_check_lives(user_ids, league_id, selections):
                         if match["team_a_score"] is None or match["team_h_score"] is None:
                             break
                         elif match["team_a_score"] == match["team_h_score"]:
-                            num_lives += 1
+                            num_points += 1
                         elif match["team_a_score"] > match["team_h_score"]:
-                            num_lives += 3
+                            num_points += 3
                     elif match["team_h"] == team_id:
                         if match["team_a_score"] is None or match["team_h_score"] is None:
                             break
                         elif match["team_a_score"] == match["team_h_score"]:
-                            num_lives += 1
+                            num_points += 1
                         elif match["team_a_score"] < match["team_h_score"]:
-                            num_lives += 3
-        lives.append(num_lives)
+                            num_points += 3
+        lives.append(num_points)
+        print("lives", num_points)
     return lives
 
 
@@ -62,6 +64,4 @@ def get_games(user_selections):
                     team_a_id = match["team_a"]
                     game_data.append([gameweek_id, team_id, match["team_h_score"], match["team_h_difficulty"], match["team_a"],
                          match["team_a_score"], match["team_a_difficulty"]])
-            print("game data", game_data)
-    print("game data", game_data)
     return game_data

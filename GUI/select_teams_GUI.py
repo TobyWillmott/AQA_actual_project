@@ -15,6 +15,7 @@ class SelectTeams(tk.Frame):
                        "hide": tk.PhotoImage(file=r"GUI/images/hide.png").subsample(19, 19),
                        "back": tk.PhotoImage(file=r"GUI/images/back_button.png").subsample(19, 19)}
 
+        self.team_id = None
         self.controller = parent
         self.user_id = user_id
         self.league_id = league_id
@@ -148,7 +149,6 @@ class SelectTeams(tk.Frame):
         return teams_lis
 
     def choose_team(self, name):
-        team_id = None
         for i in self.teams_id:
             if i[1] == name:
                 team_id = i[0]
@@ -156,7 +156,8 @@ class SelectTeams(tk.Frame):
 
     def select_picked(self):
         try:
-            print("current gameweek", self.current_gameweek_id.get())
+            if self.team_id == None:
+                raise ValueError("No team selected")
             selection = [self.current_gameweek_id.get(), self.user_id, self.team_id, self.league_id]
             selection_index = self.controller.add_user_selections(selection)
             if selection_index == "Team has already been selected":
@@ -169,6 +170,7 @@ class SelectTeams(tk.Frame):
                 self.current_gameweek_id.set(current_num)
                 self.gameweek_label.configure(text=f"The gameweek to choose a team for is {self.current_gameweek_id.get()}")
                 self.display_matches_second()
+                self.team_id = None
                 if selection_index == "finished":
                     self.finished_selection()
         except ValueError as error:
