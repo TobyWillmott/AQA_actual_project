@@ -46,7 +46,7 @@ class SelectTeams(tk.Frame):
                            "Wolverhampton Wanderers": tk.PhotoImage(file=r"GUI/images/Wolverhampton Wanderers.png").subsample(2, 2),
                            }
         self.teams_buttons = [
-            tk.Button(self, bg="white", text=f"{name}\n", font=('Arial', 9), fg="black", image=self.team_crest[name],
+            tk.Button(self, bg="white", text=f"{name}\n", font=('Arial', 8), fg="black", image=self.team_crest[name],
                       command=partial(self.choose_team, name), highlightbackground="#E5E5E5", width=125, compound="top", height=65) for name in
             self.teams]
         self.gameweek_label = tk.Label(self,
