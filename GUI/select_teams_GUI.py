@@ -22,6 +22,7 @@ class SelectTeams(tk.Frame):
         self.teams = self.get_teams()
         self.current_gameweek_id = tk.IntVar()
         self.current_gameweek_id.set(gameweek_id)
+        self.message_label = tk.Label(self, text='', foreground='red', bg="#E5E5E5")
         self.start_gameweek = gameweek_id
         self.team_crest = {"Arsenal": tk.PhotoImage(file=r"GUI/images/Arsenal.png").subsample(2, 2),
                            "Aston Villa": tk.PhotoImage(file=r"GUI/images/Aston Villa.png").subsample(2, 2),
@@ -49,7 +50,7 @@ class SelectTeams(tk.Frame):
                       command=partial(self.choose_team, name), highlightbackground="#E5E5E5", width=125, compound="top", height=65) for name in
             self.teams]
         self.gameweek_label = tk.Label(self,
-                                       text=f"Please choose a team for gameweek {self.current_gameweek_id.get()}", fg="black", bg="#E5E5E5", font=('Arial', 25))
+                                       text=f"Please choose a team for gameweek {self.current_gameweek_id.get()}", fg="black", bg="#E5E5E5", font=('Arial', 15))
         self.select_button = tk.Button(self, text="Confirm", command=self.select_picked, highlightbackground="#E5E5E5", padx=19, pady=10)
         self.back_button = tk.Button(self, text="Cancel League", bg="grey", command=self.back_clicked, relief="flat", activebackground="#545354", highlightbackground="#E5E5E5")
         self.user_selection = []
@@ -57,7 +58,7 @@ class SelectTeams(tk.Frame):
 
     def place_widgets(self):
         self.matches_frame.place(x=680, y=20)
-        self.gameweek_label.place(x=75, y=10)
+        self.gameweek_label.place(x=110, y=10)
         index = 0
         row_index = 0
         column_index = 0
@@ -69,6 +70,7 @@ class SelectTeams(tk.Frame):
             index += 1
         self.select_button.place(x=675, y=344)
         self.back_button.place(x=10, y=10)
+        self.message_label.place(x=500, y=30)
         self.display_matches()
 
     def display_matches(self):
@@ -156,29 +158,42 @@ class SelectTeams(tk.Frame):
             selection = [self.current_gameweek_id.get(), self.user_id, self.team_id, self.league_id]
             selection_index = self.controller.add_user_selections(selection)
             if selection_index == "Team has already been selected":
-                print("team already selected")
+                self.show_error("Team has already been selected")
             else:
                 self.teams_buttons[self.team_id - 1].configure(bg="grey",
                                                                text=f"{self.teams_id[self.team_id - 1][1]}\n{self.current_gameweek_id.get()}")
                 current_num = self.current_gameweek_id.get()
                 current_num += 1
                 self.current_gameweek_id.set(current_num)
-                if selection_index == "finished":
-                    print("finished")
-                    self.finished_selection()
                 self.gameweek_label.configure(text=f"The gameweek to choose a team for is {self.current_gameweek_id.get()}")
                 self.display_matches_second()
+                if selection_index == "finished":
+                    self.finished_selection()
         except ValueError as error:
-            print("this is the error", error)
+            self.show_error(error)
 
 
     def finished_selection(self):
-        #self.controller.add_selection_list(self.user_selection)
-        self.return_home = tk.Button(self, text="Return to homepage", command=self.return_home_page)
-        self.return_home.grid(row=20, column=2)
+        self.gameweek_label.configure(text="You have made all your selections return to Homepage")
+        self.return_home = tk.Button(self, text="Return to homepage", command=self.return_home_page, bg="grey", relief="flat", activebackground="#545354", highlightbackground="#E5E5E5")
+        self.return_home.place(x=675, y=344)
+        self.back_button.destroy()
+        self.select_button.destroy()
 
     def return_home_page(self):
         self.controller.show_home_page(self.user_id)
 
     def back_clicked(self):
         self.controller.show_home_page(self.user_id)
+
+    def show_error(self, message):
+        self.message_label['text'] = message
+        self.message_label['foreground'] = 'red'
+        self.message_label.after(3000, self.hide_message)
+
+    def hide_message(self):
+        self.message_label['text'] = ''
+
+    def revert_colours(self):
+        self.password_entry["foreground"] = "black"
+        self.username_entry["foreground"] = "black"

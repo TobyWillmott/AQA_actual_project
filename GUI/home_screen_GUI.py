@@ -25,7 +25,7 @@ class HomeScreen(tk.Frame):
         self.join_league_entry = tk.Entry(self.join_league_tab, textvariable=self.join_league_var, width=48, bg="white", fg="black")
         self.join_league_button = tk.Button(self.join_league_tab, text="Join", command=self.join_league_clicked, highlightbackground="#E5E5E5", padx=131, pady=6, activebackground="#545354", relief="flat", bg="grey")
         self.join_league_text = tk.Label(self.join_league_tab, text="To join a league please enter a unique league id", bg="#E5E5E5", fg="black")
-        self.message_label = tk.Label(self.join_league_tab, text='', foreground='red', bg="#E5E5E5")
+        self.join_message_label = tk.Label(self.join_league_tab, text='', foreground='red', bg="#E5E5E5")
 
         # user leagues widgets
         self.user_leagues = self.controller.get_user_league_info(self.user_id)
@@ -51,7 +51,8 @@ class HomeScreen(tk.Frame):
         self.gameweek_var.set(self.gameweek_timings[0])
         self.gameweek_drop_down_menu = tk.OptionMenu(self.create_league_frame, self.gameweek_var, *self.gameweek_timings)
         self.gameweek_drop_down_menu.config(bg="grey", fg="black", relief="flat", highlightbackground="#E5E5E5")
-        4
+        self.create_message_label = tk.Label(self.join_league_tab, text='asdfasdf', foreground='red', bg="#E5E5E5")
+
         self.rules_button = tk.Button(self, text="Game Rules", command=self.rules_button_clicked, highlightbackground="#E5E5E5", relief="flat", bg="grey", activebackground="#545354")
 
         self.profile_image = tk.PhotoImage(file=r"GUI/images/profile.png").subsample(10,10)
@@ -69,7 +70,7 @@ class HomeScreen(tk.Frame):
         self.join_league_entry.place(x=10, y=56)
         self.join_league_button.place(x=10, y=100)
         self.join_league_text.place(x=10, y=30)
-        self.message_label.place(x=10, y=77)
+        self.join_message_label.place(x=10, y=77)
 
 
         self.league_id_label.grid(row=0, column =0)
@@ -90,7 +91,7 @@ class HomeScreen(tk.Frame):
         self.gameweek_label.place(x=10, y=94)
         self.gameweek_drop_down_menu.place(x=10, y=113)
         self.create_league_button.place(x=10, y=146)
-
+        self.create_message_label.place(x=40, y=600)
 
         self.profile_button.place(x=768, y=0)
         self.rules_button.place(x=10, y=10)
@@ -103,12 +104,12 @@ class HomeScreen(tk.Frame):
             self.show_join_league_error(error)
 
     def show_join_league_error(self, error):
-        self.message_label['text'] = error
-        self.message_label['foreground'] = 'red'
-        self.message_label.after(3000, self.hide_message)
+        self.join_message_label['text'] = error
+        self.join_message_label['foreground'] = 'red'
+        self.join_message_label.after(3000, self.hide_message)
 
     def hide_message(self):
-        self.message_label['text'] = ''
+        self.join_message_label['text'] = ''
     def create_league_clicked(self):
         self.controller.show_create_league_page(self.user_id)
 

@@ -167,7 +167,7 @@ class Player:
         else:
             print("gameweek",selection_lis[0], "end gameweek:", self.end_gameweek)
             if selection_lis[0] > self.end_gameweek:
-                raise ValueError("Gameweek has finished")
+                raise ValueError("League has finished")
             elif selection_lis[0] == self.end_gameweek:
                 self.user_selections_db.append(
                     Selection(gameweek_id=selection_lis[0], outcome=None, user_id=selection_lis[1],

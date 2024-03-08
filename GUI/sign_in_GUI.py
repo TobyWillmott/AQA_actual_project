@@ -48,14 +48,18 @@ class SignIn(tk.Frame):
         self.user_list = self.controller.get_username_details(self.username_var.get())
         if self.user_list is None:
             self.error_message.configure(text="Incorrect Username")
+            self.error_message.after(3000, self.hide_message)
         else:
             password = self.controller.hash_password(self.password_var.get())
             if password == self.user_list[2]:
                 self.show_home_page(self.user_list[0])
             else:
                 self.error_message.configure(text="Incorrect Password")
+                self.error_message.after(3000, self.hide_message)
 
     def show_home_page(self, id):
+        self.password_var.set("")
+        self.username_var.set("")
         self.controller.show_home_page(id)
     def view_clicked(self):
         if self.view_button.cget('image')==str(self.view_password_logo["view"]):
@@ -65,8 +69,9 @@ class SignIn(tk.Frame):
         elif self.view_button.cget('image') == str(self.view_password_logo["hide"]):
             self.view_button.configure(image=self.view_password_logo["view"])
             self.password_entry.configure(show="*")
-    def show_error(self):
-        print("not a Valid_username")
+
+    def hide_message(self):
+        self.error_message['text'] = ''
 
     def register_clicked(self):
         self.username_var.set("")
