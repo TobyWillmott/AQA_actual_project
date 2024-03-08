@@ -23,6 +23,9 @@ class ViewLeague(tk.Frame):
         self.user_names = self.controller.get_user_name(self.user_ids)
         self.lives = self.controller.check_lives(self.user_ids, self.league_id)
 
+        self.league_name = self.controller.get_league_name(self.league_id)
+        self.league_title = tk.Label(self, text=f"{self.league_name}", bg="#E5E5E5", font=('Arial', 15))
+
         self.total_list = []
         for i in range(len(self.user_ids)):
             lis = []
@@ -33,29 +36,32 @@ class ViewLeague(tk.Frame):
         self.total_list.sort(reverse=True, key=lambda x: x[2])
         self.position_label = tk.Label(self.players_frame, text="Positon", bg="#E5E5E5")
         self.user_label = tk.Label(self.players_frame, text="Name", bg="#E5E5E5")
-        self.lives_label = tk.Label(self.players_frame, text="Number of lives", bg="#E5E5E5")
+        self.lives_label = tk.Label(self.players_frame, text="Number of Points", bg="#E5E5E5")
 
         self.positions = [tk.Label(self.players_frame, text=f"{position + 1}", bg="#E5E5E5") for position in
                           range(len(self.user_ids))]
         self.user_names = [tk.Label(self.players_frame, text=f"{name[1][0]} {name[1][1]}", bg="#E5E5E5") for name in self.total_list]
-        self.back_button = tk.Button(self, image=self.images["back"], text="Back", bg="#E5E5E5", command=self.back_clicked)
+        self.back_button = tk.Button(self, image=self.images["back"], text="Back", bg="#E5E5E5", command=self.back_clicked, relief="flat")
         self.user_lives = [tk.Label(self.players_frame, text=f"{lives[2]}", bg="#E5E5E5") for lives in self.total_list]
 
         self.user_games = self.controller.get_games(self.user_id, self.league_id)
-        self.selections_label = tk.Label(self, text=f"Your selections")
+        self.selections_label = tk.Label(self, text=f"Your selections", bg="#E5E5E5", font=('Arial', 12))
+        self.users_label = tk.Label(self, text="Leaderboard", bg="#E5E5E5", font=('Arial', 12))
         self.place_widgets()
         self.display_matches()
 
     def place_widgets(self):
-        self.players_frame.place(x=20,y=40)
-        self.selections_frame.place(x=350, y=40)
+        self.players_frame.place(x=20,y=60)
+        self.selections_frame.place(x=350, y=60)
 
         self.position_label.grid(row=1, column=0)
         self.user_label.grid(row=1, column=1)
         self.lives_label.grid(row=1, column=2)
         self.back_button.grid(row=0, column=0)
 
-        self.selections_label.place(x=600, y=0)
+        self.selections_label.place(x=460, y=35)
+        self.users_label.place(x=110, y=35)
+        self.league_title.place(x=300, y=0)
 
         for i in range(len(self.user_ids)):
             self.positions[i].grid(row=2 + i, column=0)

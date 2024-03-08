@@ -66,7 +66,7 @@ class TkApplication(tk.Tk):
         frame_to_show.pack(expand=True, fill=tk.BOTH)
 
     def show_view_league_page(self, user_id, league_id):
-        self.geometry("800x800")
+        self.geometry("700x800")
         widgets = self.winfo_children()
         for w in widgets:
             if w.winfo_class() == "Frame":
@@ -130,6 +130,9 @@ class TkApplication(tk.Tk):
 
     def get_games(self, user_id, league_id):
         return self.game.get_games(user_id, league_id)
+
+    def get_league_name(self, league_id):
+        return self.game.get_league_name(league_id)
 
 if __name__ == "__main__":
     app = TkApplication()

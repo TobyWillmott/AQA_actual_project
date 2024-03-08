@@ -142,10 +142,14 @@ def qry_get_games(user_id_, league_id_):
     with Session(engine) as sess:
         selections = sess.query(Selection.team_id, Selection.gameweek_id).filter_by(league_id=league_id_,
                                                                                     user_id=user_id_).all()
-    print("this is a seletion: ", selections)
     return selections
 
 def qry_check_in_league(user_id_, league_id_):
     with Session(engine) as sess:
         selection = sess.query(UserLeague.user_league_id).filter_by(league_id=league_id_, user_id=user_id_).all()
     return selection
+
+def qry_get_league_name(league_id):
+    with Session(engine) as sess:
+        selection = sess.query(League.league_name).filter_by(league_id=league_id).first()
+    return selection[0]

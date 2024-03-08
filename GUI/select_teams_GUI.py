@@ -9,7 +9,7 @@ class SelectTeams(tk.Frame):
 
         self.config(background="#E5E5E5")
 
-        self.matches_frame = VerticalScrolledFrame(self, width=80, height=280, bg="#E5E5E5", highlightbackground="black", highlightthickness=3)
+        self.matches_frame = VerticalScrolledFrame(self, width=80, height=270, bg="#E5E5E5", highlightbackground="black", highlightthickness=3)
 
         self.images = {"view": tk.PhotoImage(file=r"GUI/images/view.png").subsample(19, 19),
                        "hide": tk.PhotoImage(file=r"GUI/images/hide.png").subsample(19, 19),
@@ -51,14 +51,15 @@ class SelectTeams(tk.Frame):
             self.teams]
         self.gameweek_label = tk.Label(self,
                                        text=f"Please choose a team for gameweek {self.current_gameweek_id.get()}", fg="black", bg="#E5E5E5", font=('Arial', 15))
+        self.title_message = tk.Label(self, text="Please pick a team for every gameweek you can only pick a team once", fg="black", bg="#E5E5E5", font=('Arial', 15))
         self.select_button = tk.Button(self, text="Confirm", command=self.select_picked, highlightbackground="#E5E5E5", padx=19, pady=10)
         self.back_button = tk.Button(self, text="Cancel League", bg="grey", command=self.back_clicked, relief="flat", activebackground="#545354", highlightbackground="#E5E5E5")
         self.user_selection = []
         self.place_widgets()
 
     def place_widgets(self):
-        self.matches_frame.place(x=680, y=20)
-        self.gameweek_label.place(x=110, y=10)
+        self.matches_frame.place(x=680, y=30)
+        self.gameweek_label.place(x=110, y=30)
         index = 0
         row_index = 0
         column_index = 0
@@ -70,7 +71,8 @@ class SelectTeams(tk.Frame):
             index += 1
         self.select_button.place(x=678, y=344)
         self.back_button.place(x=10, y=10)
-        self.message_label.place(x=678, y=320)
+        self.title_message.place(x=110, y=0)
+        self.message_label.place(x=678, y=305)
         self.display_matches()
 
     def display_matches(self):
@@ -158,7 +160,7 @@ class SelectTeams(tk.Frame):
             selection = [self.current_gameweek_id.get(), self.user_id, self.team_id, self.league_id]
             selection_index = self.controller.add_user_selections(selection)
             if selection_index == "Team has already been selected":
-                self.show_error("Team has already been selected")
+                self.show_error("Team has already \n been selected")
             else:
                 self.teams_buttons[self.team_id - 1].configure(bg="grey",
                                                                text=f"{self.teams_id[self.team_id - 1][1]}\n{self.current_gameweek_id.get()}")
@@ -179,6 +181,7 @@ class SelectTeams(tk.Frame):
         self.return_home.place(x=675, y=344)
         self.back_button.destroy()
         self.select_button.destroy()
+        self.title_message.destroy()
 
     def return_home_page(self):
         self.controller.show_home_page(self.user_id)

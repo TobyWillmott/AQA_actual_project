@@ -125,6 +125,9 @@ class Game:
         if qry.qry_check_in_league(user_id, league_id) != []:
             raise ValueError("Already in league")
 
+    def get_league_name(self, league_id):
+        return qry.qry_get_league_name(league_id)
+
 
 
 class Player:
