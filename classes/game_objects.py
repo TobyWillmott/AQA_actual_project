@@ -15,7 +15,8 @@ class Game:
 
     def __init__(self):
         self.user = None
-        self.time = datetime.now
+        #self.time = datetime(2023, 8, 11, 17, 30, 0)
+        self.time = datetime.now()
 
     def add_user(self, first_name_, last_name_, username_, password_):
         username_pattern = "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$"
@@ -51,7 +52,7 @@ class Game:
         timings = qry.qry_get_gameweek_id()
         updated_timings = []
         for gameweek in timings:
-            if gameweek[1]>datetime.now():
+            if gameweek[1]>self.time:
                 updated_timings.append(gameweek)
         return updated_timings
 
@@ -130,9 +131,7 @@ class Game:
         if qry.qry_check_in_league(user_id, league_id) != []:
             raise ValueError("Already in league")
         starting_time = qry.qry_get_league_starting_datetime(gameweek_id)
-        print("gameweek", starting_time)
-        print("datetime", datetime.now())
-        if starting_time<datetime.now():
+        if starting_time<self.time:
             raise ValueError("League has already started")
 
     def get_league_name(self, league_id):
@@ -146,7 +145,7 @@ class Player:
         self.user_selections = None
         self.user_selections_db = []
         self.add_user_league = []
-        self.start_gameweek = None
+        self.current_gameweek = None
         self.end_gameweek = None
         self.finished = None
     def add_all(self):
@@ -156,17 +155,19 @@ class Player:
         qry.qry_add_selection_list(self.user_selections_db)
         self.user_selections_db = []
         self.user_selections = None
-        self.start_gameweek = None
+        self.current_gameweek = None
         self.end_gameweek = None
     def set_user_selections(self, selection_lis):
-        self.start_gameweek = selection_lis[0]
+        self.current_gameweek = selection_lis[0]
         if self.user_selections == None:
             if selection_lis[0] + 20 > 38:
                 self.end_gameweek = 38
             else:
-                self.end_gameweek = self.start_gameweek + 19
+                self.end_gameweek = self.current_gameweek + 19
             if selection_lis[0] > self.end_gameweek:
                 raise ValueError("Gameweek has finished")
+            if self.team_playing(self.current_gameweek, selection_lis[2]) == False:
+                raise ValueError("Team is not playing \n in this gameweek")
             self.user_selections = [selection_lis]
             self.set_user_league(selection_lis[1], selection_lis[3])
             self.user_selections_db.append(
@@ -185,6 +186,8 @@ class Player:
                 self.add_all()
                 return "finished"
             else:
+                if self.team_playing(self.current_gameweek, selection_lis[2]) == False:
+                    raise ValueError("Team is not playing in this gameweek")
                 for gameweek in self.user_selections:
                     if gameweek[2] == selection_lis[2]:
                         return "Team has already been selected"
@@ -198,4 +201,6 @@ class Player:
     def remove_my_user(self):
         self.my_user = None
 
+    def team_playing(self, game_week_id, team_id):
+        return api.team_playing(game_week_id, team_id)
 

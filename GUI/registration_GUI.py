@@ -91,6 +91,10 @@ class Registration(tk.Frame):
     def show_home_page(self):
         self.user_list = self.controller.get_username_details(self.username_var.get())
         id = self.user_list[0]
+        self.password_var.set("")
+        self.username_var.set("")
+        self.first_name_var.set("")
+        self.second_name_var.set("")
         self.controller.show_home_page(id)
 
     def show_error(self, message):

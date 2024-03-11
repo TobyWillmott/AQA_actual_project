@@ -65,3 +65,18 @@ def get_games(user_selections):
                     game_data.append([gameweek_id, team_id, match["team_h_score"], match["team_h_difficulty"], match["team_a"],
                          match["team_a_score"], match["team_a_difficulty"]])
     return game_data
+
+def team_playing(gameweek_id, team_id):
+    url = f"https://fantasy.premierleague.com/api/fixtures/?event={gameweek_id}"
+    response = requests.get(url)
+    data = response.text
+    parse_json = json.loads(data)
+    for active_case in parse_json:
+        if active_case['team_h'] == team_id:
+            print("returning true")
+            return True
+        elif active_case['team_a'] == team_id:
+            print("returning true")
+            return True
+    print("returning false")
+    return False
