@@ -3,6 +3,15 @@ import json
 
 
 def api_match_info(game_week_id):
+    """
+    Parameters
+    ----------
+    game_week_id - the gameweek the subroutine gets matches for
+
+    Returns
+    ---------
+    a list containing the relevant information for a gameweek (teams playing and difficulty)
+    """
     url = f"https://fantasy.premierleague.com/api/fixtures/?event={game_week_id}"
     response = requests.get(url)
     data = response.text
@@ -15,7 +24,17 @@ def api_match_info(game_week_id):
     return lis_game_week
 
 
-def api_check_points(user_ids, league_id, selections):
+def api_check_points(selections):
+    '''
+    Parameters
+    ----------
+    selections - a list of a list with each sublist representing a different user
+    sublist[0] = user_id
+    sublist[1] = team_id
+    sublist[2] = gameweek_id
+
+    returns a list in containing the number of points of each user
+    '''
     url = "https://fantasy.premierleague.com/api/fixtures/"
     lives = []
     response = requests.get(url)
@@ -42,11 +61,16 @@ def api_check_points(user_ids, league_id, selections):
                         elif match["team_a_score"] < match["team_h_score"]:
                             num_points += 3
         lives.append(num_points)
-        print("lives", num_points)
     return lives
 
 
 def get_games(user_selections):
+    '''
+    Parameters
+    ----------
+    user_selections - a 2-dimensional list with each sublist representing a [team_id, gameweek_id]
+    returns a list for containing data on all the matches the user has selected (difficulty, score)
+    '''
     url = "https://fantasy.premierleague.com/api/fixtures/"
     response = requests.get(url)
     data = response.json()
@@ -62,11 +86,21 @@ def get_games(user_selections):
                          match["team_h_score"], match["team_h_difficulty"]])
                 if match["team_h"] == team_id:
                     team_a_id = match["team_a"]
-                    game_data.append([gameweek_id, team_id, match["team_h_score"], match["team_h_difficulty"], match["team_a"],
+                    game_data.append(
+                        [gameweek_id, team_id, match["team_h_score"], match["team_h_difficulty"], match["team_a"],
                          match["team_a_score"], match["team_a_difficulty"]])
     return game_data
 
+
 def team_playing(gameweek_id, team_id):
+    '''
+    Parameters
+    ----------
+    gameweek_id
+    team_id
+    a function that is used to check whether a team is playing during that gameweek
+    returns True is team is playing and False if the team is not playing
+    '''
     url = f"https://fantasy.premierleague.com/api/fixtures/?event={gameweek_id}"
     response = requests.get(url)
     data = response.text

@@ -29,6 +29,15 @@ def qry_add_league(gameweek_id_, league_name_):
 
 
 def qry_get_username_details(username_entry):
+    '''
+
+    Parameters
+    ----------
+    username_entry - username of user
+
+    Returns
+    a list containing user_id, username and password
+    '''
     with Session(engine) as sess:
         output_lis = sess.query(User.user_id, User.username, User.password).filter_by(
             username=username_entry).first()
@@ -72,6 +81,12 @@ def qry_add_selection_list(user_selections):
 
 
 def qry_get_teams():
+    '''
+
+    Returns
+    a list of all the team id and corresponding team name
+
+    '''
     with Session(engine) as sess:
         teams = sess.query(Team.team_id, Team.team_name).all()
     lis = []
@@ -81,6 +96,18 @@ def qry_get_teams():
 
 
 def qry_get_league_starting_gameweek(league_id_):
+    '''
+
+    Parameters
+    ----------
+    league_id_ - league id of the league you would like the starting gameweek for
+
+    Returns
+    -------
+    the starting gameweek of a league
+    or a ValueError is the league does not exist
+
+    '''
     try:
         with Session(engine) as sess:
             gameweek = sess.query(League.gameweek_id).filter_by(league_id=league_id_).first()
@@ -89,12 +116,28 @@ def qry_get_league_starting_gameweek(league_id_):
         raise ValueError("League not found")
 
 def qry_get_final_league_gameweek():
+    '''
+
+    Returns
+    -------
+    The league id of the last league added
+    '''
     with Session(engine) as sess:
         gameweek_id = sess.query(League.league_id, League.gameweek_id).order_by(League.league_id.desc()).first()
     return gameweek_id
 
 
 def qry_get_user_league_info(user_id_):
+    '''
+
+    Parameters
+    ----------
+    user_id_
+
+    Returns
+    -------
+    a list of the current leagues the user is part of
+    '''
     with Session(engine) as sess:
         league_ids = sess.query(UserLeague.league_id).filter_by(user_id=user_id_).all()
     lis = []
@@ -110,12 +153,33 @@ def qry_get_user_league_info(user_id_):
 
 
 def qry_id_to_team(team_id_):
+    '''
+
+    Parameters
+    ----------
+    team_id_
+
+    Returns
+    -------
+    The team name abbreviation for corresponding id
+    '''
     with Session(engine) as sess:
         team_name = sess.query(Team.team_abb).filter_by(team_id=team_id_).first()
     return team_name[0]
 
 
 def qry_get_user_name(user_ids):
+    '''
+
+    Parameters
+    ----------
+    user_ids - a list of the user ids you would like the username for
+
+    Returns
+    -------
+    the usernames of the list of user ids
+
+    '''
     with Session(engine) as sess:
         user_names = []
         for user_id in user_ids:
@@ -125,6 +189,16 @@ def qry_get_user_name(user_ids):
 
 
 def qry_get_user_ids(league_id_):
+    '''
+
+    Parameters
+    ----------
+    league_id_
+
+    Returns
+    -------
+    a list of user_ids that contain are part of the league with league id: league_id
+    '''
     with Session(engine) as sess:
         user_ids = sess.query(UserLeague.user_id).filter_by(league_id=league_id_).all()
     return user_ids
@@ -144,6 +218,17 @@ def qry_get_games(user_id_, league_id_):
     return selections
 
 def qry_check_in_league(user_id_, league_id_):
+    '''
+
+    Parameters
+    ----------
+    user_id_
+    league_id_
+
+    Returns
+    -------
+    a list containing a user_league_id if the user if part of this league if not an empty list
+    '''
     with Session(engine) as sess:
         selection = sess.query(UserLeague.user_league_id).filter_by(league_id=league_id_, user_id=user_id_).all()
     return selection
