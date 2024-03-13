@@ -8,6 +8,17 @@ Base.metadata.create_all(engine)
 
 
 def qry_add_user(first_name_, last_name_, username_, password_):
+    '''
+    A function that is used to add a user to the database
+
+    Parameters
+    ----------
+    first_name_: first name of the user
+    last_name_: last name of the user
+    username_: username of the user
+    password_: password of the user
+
+    '''
     try:
         hasher = hashlib.sha256()
         hasher.update(bytes(password_, 'utf-8'))
@@ -22,6 +33,13 @@ def qry_add_user(first_name_, last_name_, username_, password_):
 
 
 def qry_add_league(gameweek_id_, league_name_):
+    '''
+    This function is used to add a league to the database
+    Parameters
+    ----------
+    gameweek_id_
+    league_name_
+    '''
     with Session(engine) as sess:
         league = League(gameweek_id=gameweek_id_, league_name=league_name_)
         sess.add(league)
@@ -30,6 +48,7 @@ def qry_add_league(gameweek_id_, league_name_):
 
 def qry_get_username_details(username_entry):
     '''
+    This function is used to get the user_id, password for a given username
 
     Parameters
     ----------
@@ -51,12 +70,20 @@ def qry_get_username_details(username_entry):
 
 
 def qry_get_gameweek_id():
+    '''
+    This function is used to show all the gameweek start dates and their gameweek ids
+
+    Returns
+    -------
+    a list of all the gameweek start dates and the corresponding gameweek id
+    '''
     with Session(engine) as sess:
         output_id = sess.query(Gameweek.gameweek_id, Gameweek.start_date).all()
     return output_id
 
 
 def qry_add_user_league(user_id_, league_id_):
+
     try:
         with Session(engine) as sess:
             user_league_value = UserLeague(user_id=user_id_, league_id=league_id_)
