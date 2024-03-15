@@ -63,7 +63,7 @@ def qry_get_username_details(username_entry):
     return output_lis
 
 
-#def qry_get_gameweek_timings():
+# def qry_get_gameweek_timings():
 #    with Session(engine) as sess:
 #        output_lis = sess.query(Gameweek.start_date).all()
 #    return output_lis
@@ -83,7 +83,6 @@ def qry_get_gameweek_id():
 
 
 def qry_add_user_league(user_id_, league_id_):
-
     try:
         with Session(engine) as sess:
             user_league_value = UserLeague(user_id=user_id_, league_id=league_id_)
@@ -141,6 +140,7 @@ def qry_get_league_starting_gameweek(league_id_):
         return gameweek[0]
     except:
         raise ValueError("League not found")
+
 
 def qry_get_final_league_gameweek():
     '''
@@ -244,6 +244,7 @@ def qry_get_games(user_id_, league_id_):
                                                                                     user_id=user_id_).all()
     return selections
 
+
 def qry_check_in_league(user_id_, league_id_):
     '''
 
@@ -260,13 +261,14 @@ def qry_check_in_league(user_id_, league_id_):
         selection = sess.query(UserLeague.user_league_id).filter_by(league_id=league_id_, user_id=user_id_).all()
     return selection
 
+
 def qry_get_league_name(league_id):
     with Session(engine) as sess:
         selection = sess.query(League.league_name).filter_by(league_id=league_id).first()
     return selection[0]
 
+
 def qry_get_league_starting_datetime(gameweek_id_):
     with Session(engine) as sess:
         gameweek = sess.query(Gameweek.start_date).filter_by(gameweek_id=gameweek_id_).first()
     return gameweek[0]
-

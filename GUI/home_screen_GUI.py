@@ -2,13 +2,26 @@ import tkinter as tk
 from functools import partial
 from GUI.vertical_scrolled_frame import VerticalScrolledFrame
 class HomeScreen(tk.Frame):
+    '''
+    This class is used to show the home screen to the user once they have logged in. It has three seperate frames:
+    Create league frame: used to create a league
+    Join league frame: used to join a legaue
+    View league frame: allows you to view the leagues you are currently part of
+    '''
     def __init__(self, parent, user_id):
+        '''
+        This method is used to initialise all the widgets and attributes that are part of the screen
+
+        Parameters
+        ----------
+        parent - parent class of the tkinter frame which is also used as the controller
+        user_id: user_id of the user that is logged in
+        '''
         super().__init__(parent)
         self.configure(background="#E5E5E5")
 
         self.join_league_tab = tk.Frame(self, width=320, height=150, bg="#E5E5E5", highlightbackground="black", highlightthickness=3)
         self.create_league_frame = tk.Frame(self, width=320, height=185, bg="#E5E5E5", highlightbackground="black", highlightthickness=3)
-        #self.view_leagues_frame = tk.Frame(self, width=380, height=345, bg="#E5E5E5", highlightbackground="black", highlightthickness=3)
         self.view_leagues_frame = VerticalScrolledFrame(self, width=380, height=345, bg="#E5E5E5", highlightbackground="black", highlightthickness=3)
 
         self.title_label = tk.Label(self,
@@ -61,7 +74,10 @@ class HomeScreen(tk.Frame):
         self.place_widgets()
 
     def place_widgets(self):
-
+        '''
+        This subroutine is used to place all of the widgets that are initialised in the __init__ method.
+        To do this either the .place or .grid command is used
+        '''
         self.title_label.place(x=300, y=0)
         self.view_leagues_frame.place(x=380, y=40)
         self.join_league_tab.place(x=20, y=40)
@@ -97,6 +113,11 @@ class HomeScreen(tk.Frame):
         self.rules_button.place(x=10, y=10)
 
     def join_league_clicked(self):
+        '''
+        This function is run when the join_league_button is pressed
+        It is used to show the league selection page if successful
+        If not displays a suitable error message to the user through the show_join_league_error function
+        '''
         try:
             current_gameweek = self.controller.get_league_starting_gameweek(self.join_league_var.get())
             self.controller.show_league_selection_page(self.user_id, self.join_league_var.get(), current_gameweek)
@@ -104,29 +125,68 @@ class HomeScreen(tk.Frame):
             self.show_join_league_error(error)
 
     def show_join_league_error(self, error):
+        '''
+        This subroutine is used to display a suitable error messge to the user which is removed after 3 seconds
+        Parameters
+        ----------
+        error - the error that has arisen from joining a league
+        '''
         self.join_message_label['text'] = error
         self.join_message_label['foreground'] = 'red'
         self.join_message_label.after(3000, self.hide_message)
 
     def hide_message(self):
+        '''
+        This subroutine is used to remove the error message that is shown to the user
+        '''
         self.join_message_label['text'] = ''
         self.create_message_label["text"] = ""
 
     def show_create_league_error(self, error):
+        '''
+        This subroutine is used to display a suitable error message to the user
+        Parameters
+        ----------
+        error - the error that has arisen from creating a league
+
+        '''
         self.create_message_label['text'] = error
         self.create_message_label['foreground'] = 'red'
         self.create_message_label.after(3000, self.hide_message)
 
     def view_league_clicked(self, league_id):
+        '''
+        This subroutine is run when the league_id button is clicked using the league_id as a parameter specifying the league they would like to join
+        It is used to show the view league page
+        Parameters
+        ----------
+        league_id: the league_id of the league they would like to view
+        '''
         self.controller.show_view_league_page(self.user_id, league_id)
 
     def get_gameweek_dates(self, lis):
+        '''
+        This subroutine is used to convert the gameweek_timings_id which is a two-dimensional list containing gameweek_id and start_date into a list with only start_date
+        Parameters
+        ----------
+        lis
+
+        Returns
+        -------
+
+        '''
         lis_new = []
         for i in lis:
             lis_new.append(i[1])
         return lis_new
 
     def get_gameweek_id_final(self):
+        '''
+        this subroutine is used to get the corresponding gameweek id from the gameweek date selected
+        Returns
+        -------
+        the gameweek id
+        '''
         for i in self.gameweek_timings:
             if i.strftime("%Y-%m-%d %H:%M:%S") == self.gameweek_var.get():
                 gameweek = i
@@ -136,14 +196,32 @@ class HomeScreen(tk.Frame):
                 return j[0]
 
     def rules_button_clicked(self):
+        '''
+        This subroutine is used to show the rules frame when the rules button is clicked
+        '''
         self.controller.show_rules_page(self.user_id)
     def profile_clicked(self):
+        '''
+        This subroutine is used to show the sign out button when the profile button is clicked.
+        The sign out button disappears after 3 seconds
+        Returns
+        -------
+
+        '''
         self.sign_out_button = tk.Button(self, text="Sign Out", command=self.sign_out_clicked,  highlightbackground="#E5E5E5", relief="flat", bg="grey", activebackground="#545354")
         self.sign_out_button.place(x=700, y=10)
         self.sign_out_button.after(3000, self.hide_sign_out)
     def hide_sign_out(self):
+        '''
+        This subroutine is used to remove the sign out button
+          '''
         self.sign_out_button.destroy()
     def create_button_clicked(self):
+        '''
+        This subroutine is used whent the create_league_button is clicked
+        If successful it will show the league selection page to the user
+        If not it will show the appropriate error to the user
+        '''
         try:
             gameweek_id = self.get_gameweek_id_final()
             self.controller.add_league(gameweek_id, self.league_name_entry.get())
@@ -154,4 +232,7 @@ class HomeScreen(tk.Frame):
             self.show_create_league_error(error)
 
     def sign_out_clicked(self):
+        '''
+        This subroutine is used to return the user to the sign in frame
+        '''
         self.controller.show_frame("sign_in_frame")

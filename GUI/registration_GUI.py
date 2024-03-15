@@ -49,11 +49,14 @@ class Registration(tk.Frame):
 
         self.back_button = tk.Button(self, image=self.images["back"] , command=self.back_clicked, highlightbackground="#E5E5E5", relief="flat", bg="#E5E5E5")
 
-        # set the controller
+
 
         self.place_widgets()
 
     def place_widgets(self):
+        '''
+        This subroutine is used to place all the widgets
+        '''
         self.back_button.place(x=0, y=0)
         self.title_label.place(x=200, y=0)
         self.label_first_name.place(x=200, y=40)
@@ -71,6 +74,9 @@ class Registration(tk.Frame):
 
 
     def view_clicked(self):
+        '''
+        This subroutine converts the password text from asteriks to text or text to asteriks (allows the user to hide or show the password)
+        '''
         if self.view_button.cget('image')==str(self.images["view"]):
             self.view_button.configure(image=self.images["hide"])
             self.password_entry.configure(show="")
@@ -80,6 +86,9 @@ class Registration(tk.Frame):
             self.password_entry.configure(show="*")
 
     def save_button_clicked(self):
+        '''
+        This subroutine is run when the save_button is clicked and either shows the home_page to the user if successful or displays an appropiate error message
+        '''
         try:
             if self.controller:
                 clicked = self.controller.add_user(self.first_name_var.get(), self.second_name_var.get(),
@@ -101,29 +110,18 @@ class Registration(tk.Frame):
         self.message_label['text'] = message
         self.message_label['foreground'] = 'red'
         self.message_label.after(3000, self.hide_message)
-        if (message == ValueError('Username is invalid')) or (message == "Username already exists"):
-            self.username_entry['foreground'] = 'red'
-        if message == "Password is invalid, Must have minimum eight characters, at least one letter and one number":
-            self.password_entry['foreground'] = 'red'
-        if message == "First name is invalid":
-            self.first_name_entry['foreground'] = 'red'
-        if message == "Surname is invalid":
-            self.username_entry['foreground'] = 'red'
-
-    def show_success(self, message):
-        self.username_var.set('')
-        self.password_var.set('')
-        self.first_name_var.set('')
-        self.second_name_var.set('')
 
     def hide_message(self):
+        '''
+        This subroutine is used to hide the error message that is displayed to the user
+        '''
         self.message_label['text'] = ''
 
-    def revert_colours(self):
-        self.password_entry["foreground"] = "black"
-        self.username_entry["foreground"] = "black"
 
     def back_clicked(self):
+        '''
+        This subroutine is when the back_button is clicked and the user is returned to the sign_in_frame
+        '''
         self.username_var.set("")
         self.password_var.set("")
         self.first_name_var.set("")
