@@ -71,7 +71,7 @@ gameweek = [Gameweek(start_date=datetime(2023, 8, 11, 17, 30, 0)),
 #           League(gameweek_id=2, league_name="Tottenham Fans")]
 
 
-engine = create_engine("sqlite:///fantasy_football.sqlite", echo=True)
+engine = create_engine("sqlite:///fantasy_football.sqlite", echo=False)
 
 with Session(engine) as sess:
     sess.add_all(users)

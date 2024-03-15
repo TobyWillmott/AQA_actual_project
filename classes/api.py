@@ -39,8 +39,6 @@ def api_check_points(selections):
     lives = []
     response = requests.get(url)
     data = response.json()
-    for i in selections:
-        print("this is a selection", i)
     for user in selections:
         num_points = 0
         for user_id, team_id, gameweek_id in user:
@@ -77,7 +75,6 @@ def get_games(user_selections):
 
     game_data = []
     for team_id, gameweek_id in user_selections:
-        print("user selection: ", user_selections)
         for match in data:
             if match["event"] == gameweek_id and (match["team_a"] == team_id or match["team_h"] == team_id):
                 if match["team_a"] == team_id:
@@ -107,10 +104,7 @@ def team_playing(gameweek_id, team_id):
     parse_json = json.loads(data)
     for active_case in parse_json:
         if active_case['team_h'] == team_id:
-            print("returning true")
             return True
         elif active_case['team_a'] == team_id:
-            print("returning true")
             return True
-    print("returning false")
     return False

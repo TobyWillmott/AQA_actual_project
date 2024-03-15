@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from models import Base, User, Gameweek, League, UserLeague, Selection, Team
 from sqlalchemy.orm import Session
 
-engine = create_engine("sqlite:///database/fantasy_football.sqlite", echo=True)
+engine = create_engine("sqlite:///database/fantasy_football.sqlite", echo=False)
 
 if __name__ == "__main__":
     # with Session(engine) as sess:
