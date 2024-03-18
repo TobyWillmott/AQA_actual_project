@@ -12,9 +12,19 @@ Base.metadata.create_all(engine)
 
 
 class Game:
+    """
+    A class representing the game
 
+    Attributes
+    ---------
+    player - the player playing the game
+    time - the current time of the game
+    """
     def __init__(self):
-        self.user = None
+        """
+        This method initialises all the attributes of the class
+        """
+        self.player = None
         # self.time = datetime(2023, 8, 11, 17, 30, 0)
         self.time = datetime.now()
 
@@ -23,7 +33,7 @@ class Game:
         adds a user to the database by running the qry.qry_add_user() function
         validates whether first_name, last_name, username and password are all valid inputs
         """
-        username_pattern = "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$"
+        username_pattern = "^[a-z0-9_-]{3,15}$"
         if not re.fullmatch(username_pattern, username_):
             raise ValueError("Username is invalid")
         if first_name_ == "":
@@ -58,7 +68,7 @@ class Game:
         self.player = Player(id)
 
     def add_user_selections(self, selection_lis):
-        '''
+        """
 
         Parameters
         ----------
@@ -67,7 +77,7 @@ class Game:
         Returns
         The output of player.set_user_selections() - this is a message that notifies whether was successful
 
-        '''
+        """
         return self.player.set_user_selections(selection_lis)
 
     def get_gameweek_id(self):
@@ -333,7 +343,25 @@ class Game:
 
 
 class Player:
+    """
+    This class is used to simulate the actions of a player
+
+    Attributes
+    ----------
+    user_id - user id of the player
+    user_selections - the selections the user has made so far (in a list format)
+    user_selection_db - the selections of the user in a sqlalchemy insert format so can be easily added to the database
+    add_user_league - the sqlalchemy insert to add a value to the linking table user_league
+    current_gameweek - the current gameweek of the selections
+    end_gameweek - the end gameweek of the selections
+    """
     def __init__(self, user_id):
+        """
+        This method initialises all the attributes of the Player class
+        Parameters
+        ----------
+        user_id - the user_id of the user
+        """
         self.user_id = user_id
         self.user_selections = None
         self.user_selections_db = []
@@ -358,7 +386,7 @@ class Player:
 
     def set_user_selections(self, selection_lis):
         '''
-        This function is used to add a user selection to the a list of selections
+        This function is used to add a user selection to the list of selections
 
         Parameters
         ----------
@@ -417,24 +445,24 @@ class Player:
                 self.user_selections.append(selection_lis)
 
     def set_user_league(self, user_id_, league_id_):
-        '''
-        This function is used to set the variable self.add_user_leagur
+        """
+        This function is used to set the variable self.add_user_league
 
         Parameters
         ----------
         user_id_
         league_id_
-        '''
+        """
         self.add_user_league = [user_id_, league_id_]
 
     def remove_my_user(self):
-        '''
+        """
         Removes the current user in use
-        '''
+        """
         self.my_user = None
 
     def team_playing(self, game_week_id, team_id):
-        '''
+        """
         This function is used to check whether a team is playing in a specific gameweek
 
         Parameters
@@ -447,5 +475,5 @@ class Player:
         True if the team is playing in that specific gameweek
         False if the team is not playing in that specific gameweek
 
-        '''
+        """
         return api.team_playing(game_week_id, team_id)

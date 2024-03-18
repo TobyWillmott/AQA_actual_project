@@ -4,7 +4,19 @@ from database.models import Selection
 from GUI.vertical_scrolled_frame import VerticalScrolledFrame
 
 class SelectTeams(tk.Frame):
+    '''
+    This class is used to display the select teams frame to the user once they have joined or created a league
+    '''
     def __init__(self, parent, user_id, league_id, gameweek_id):
+        '''
+        This subroutine is used to initialise all the widgets and attributes
+        Parameters
+        ----------
+        parent - parent class of the tkinter frame which is also used as the controller
+        user_id - the user id of the user currently signed in
+        league_id - the league id of the team they are making selections for
+        gameweek_id - the league starting gameweek_id
+        '''
         super().__init__(parent)
 
         self.config(background="#E5E5E5")
@@ -59,6 +71,9 @@ class SelectTeams(tk.Frame):
         self.place_widgets()
 
     def place_widgets(self):
+        """
+        This function is used to place all of the widgets
+        """
         self.matches_frame.place(x=680, y=30)
         self.gameweek_label.place(x=110, y=30)
         index = 0
@@ -77,6 +92,9 @@ class SelectTeams(tk.Frame):
         self.display_matches()
 
     def display_matches(self):
+        """
+        Thid subroutine is used to display the first set of matches to the user as they are logged into their account
+        """
         matches = self.controller.match_info(self.current_gameweek_id.get())
         matches_teams = []
         for match in matches:
@@ -94,6 +112,17 @@ class SelectTeams(tk.Frame):
             self.versus_label[i].grid(row=i, column=1)
 
     def calculate_colour(self, difficulty):
+        """
+        This subroutine is used to convert an integer difficulty rating into a corresponding hex colour
+        Parameters
+        ----------
+        difficulty - the difficulty rating of the team
+
+        Returns
+        -------
+        colour - the appropriate colour based on the difficullty rating
+        (e.g. 5(hard match) = red or 1(easy match) = green
+        """
         if difficulty==1:
             colour="#2cba00"
         elif difficulty==2:
@@ -108,6 +137,9 @@ class SelectTeams(tk.Frame):
 
 
     def display_matches_second(self):
+        """
+        This function is used to display the matches to the user for all gameweeks except the start gameweek where display matches displays the appropriate matches to the user
+        """
         matches = self.controller.match_info(self.current_gameweek_id.get())
         matches_teams = []
         for match in matches:
@@ -143,18 +175,29 @@ class SelectTeams(tk.Frame):
 
 
     def get_teams(self):
+        """
+        this function is used to convert the self.teams_id list which is a list of a list with team_id and team_name to a list with just team_name
+        """
         teams_lis = []
         for i in self.teams_id:
             teams_lis.append(i[1])
         return teams_lis
 
     def choose_team(self, name):
+        """
+        This function is used to change the self.team_id to the team that has just been picked
+        """
         for i in self.teams_id:
             if i[1] == name:
                 team_id = i[0]
         self.team_id = team_id
 
     def select_picked(self):
+        """
+        This function is used when the confirm button is pressed(a team button has previously been pressed)
+        It is used to add the user selection by running the function self.controller.add_user_selections()
+        If there is an error this is displayed appropriately to the user
+        """
         try:
             if self.team_id == None:
                 raise ValueError("No team selected")
@@ -178,6 +221,11 @@ class SelectTeams(tk.Frame):
 
 
     def finished_selection(self):
+        """
+        This function is run once the user has chosen all their selections
+        It is used to remove the back and select button so no more selections can be made
+        It also shows notifies the user of this and creates a return to homepage button
+        """
         self.gameweek_label.configure(text="You have made all your selections return to Homepage")
         self.return_home = tk.Button(self, text="Return to homepage", command=self.return_home_page, bg="grey", relief="flat", activebackground="#545354", highlightbackground="#E5E5E5")
         self.return_home.place(x=675, y=344)
@@ -186,19 +234,28 @@ class SelectTeams(tk.Frame):
         self.title_message.destroy()
 
     def return_home_page(self):
+        """
+        This function is run when the self.return_home button is pressed and returns the user to the homepage
+        """
         self.controller.show_home_page(self.user_id)
 
     def back_clicked(self):
+        """
+        This function is run when the self.back_button is clicked
+        It returns the user to the home page screen
+        """
         self.controller.show_home_page(self.user_id)
 
     def show_error(self, message):
+        """
+        This function is used to show the appropriate error message to the user when a wrong selection is made
+        """
         self.message_label['text'] = message
         self.message_label['foreground'] = 'red'
         self.message_label.after(3000, self.hide_message)
 
     def hide_message(self):
+        """
+        This function removes the error message
+        """
         self.message_label['text'] = ''
-
-    def revert_colours(self):
-        self.password_entry["foreground"] = "black"
-        self.username_entry["foreground"] = "black"

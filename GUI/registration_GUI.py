@@ -2,7 +2,16 @@ import tkinter as tk
 
 
 class Registration(tk.Frame):
+    '''
+    This class is used to show the registration page to the user
+    '''
     def __init__(self, parent):
+        '''
+        This method is used to initialise all the widgets and attributes that are part of the screen
+        Parameters
+        ----------
+        parent - parent class of the tkinter frame which is also used as the controller
+        '''
         super().__init__(parent)
         self.configure(background="#E5E5E5")
 
@@ -98,6 +107,9 @@ class Registration(tk.Frame):
             self.show_error(error)
 
     def show_home_page(self):
+        '''
+        This subroutine is used to show the home page once the user has successfully created an account
+        '''
         self.user_list = self.controller.get_username_details(self.username_var.get())
         id = self.user_list[0]
         self.password_var.set("")
@@ -107,6 +119,12 @@ class Registration(tk.Frame):
         self.controller.show_home_page(id)
 
     def show_error(self, message):
+        '''
+        This subroutine is used to show the appropriate error message to the user
+        Parameters
+        ----------
+        message
+        '''
         self.message_label['text'] = message
         self.message_label['foreground'] = 'red'
         self.message_label.after(3000, self.hide_message)

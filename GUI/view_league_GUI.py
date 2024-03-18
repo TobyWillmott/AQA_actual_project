@@ -3,7 +3,18 @@ from GUI.vertical_scrolled_frame import VerticalScrolledFrame
 
 
 class ViewLeague(tk.Frame):
+    """
+    This class is used to view a league to a user
+    """
     def __init__(self, parent, user_id, league_id):
+        """
+        This subroutine is used to initialise all the widgets and attributes
+        Parameters
+        ----------
+        parent - parent class of the tkinter frame which is also used as the controller
+        user_id - the user id of the user currently signed in
+        league_id - the league id of the team they are making selections for
+        """
         super().__init__(parent)
         self.images = {"view": tk.PhotoImage(file=r"GUI/images/view.png").subsample(19, 19),
                        "hide": tk.PhotoImage(file=r"GUI/images/hide.png").subsample(19, 19),
@@ -51,6 +62,9 @@ class ViewLeague(tk.Frame):
         self.display_matches()
 
     def place_widgets(self):
+        """
+        This funciton is used to place the widgets
+        """
         self.players_frame.place(x=20,y=60)
         self.selections_frame.place(x=350, y=60)
 
@@ -69,6 +83,9 @@ class ViewLeague(tk.Frame):
             self.user_lives[i].grid(row=2 + i, column=3)
 
     def display_matches(self):
+        """
+        This function is used to display the selections of the users through diplaying the matches and the scores if have been played
+        """
         self.gameweek_label = tk.Label(self.selections_frame, text="Gameweek", bg="#E5E5E5", fg="black")
         self.user_selection_label = tk.Label(self.selections_frame, text="Your Selection", bg="#E5E5E5", fg="black")
         self.opp_team_label = tk.Label(self.selections_frame, text="Opposing team", bg="#E5E5E5", fg="black")
@@ -103,4 +120,7 @@ class ViewLeague(tk.Frame):
             self.opp_teams_score[i].grid(row=2*i+2, column=3)
 
     def back_clicked(self):
+        """
+        This function is used to return the user to the home page
+        """
         self.controller.show_home_page(self.user_id)

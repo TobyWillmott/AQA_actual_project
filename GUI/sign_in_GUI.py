@@ -2,7 +2,16 @@ import tkinter as tk
 
 
 class SignIn(tk.Frame):
+    """
+    This class is used to display the sign in screen to the user
+    """
     def __init__(self, parent):
+        """
+        This subroutine is used to initialise all the widgets and attributes
+        Parameters
+        ----------
+        parent - parent class of the tkinter frame which is also used as the controller
+        """
         super().__init__(parent)
         self.controller = parent
         self.configure(background="#E5E5E5")
@@ -32,6 +41,9 @@ class SignIn(tk.Frame):
         self.place_widgets()
 
     def place_widgets(self):
+        """
+        This function is used to place all of the widgets
+        """
         self.label_username.place(x=200, y=85)
         self.label_password.place(x=200, y=170)
         self.username_entry.place(x=200, y=115)
@@ -45,6 +57,11 @@ class SignIn(tk.Frame):
         self.view_button.lift()
 
     def enter_button_clicked(self):
+        """
+        This function is used to check the user input username and password and check if they are correct
+        If correct the home page is shown
+        If not correct an appropriate error message is shown to the user
+        """
         self.user_list = self.controller.get_username_details(self.username_var.get())
         if self.user_list is None:
             self.error_message.configure(text="Incorrect Username")
