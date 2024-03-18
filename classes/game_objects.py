@@ -419,6 +419,11 @@ class Player:
                 Selection(gameweek_id=selection_lis[0], outcome=None, user_id=selection_lis[1],
                           team_id=selection_lis[2],
                           league_id=selection_lis[3]))
+            if selection_lis[0] == self.end_gameweek:
+                self.user_selections.append(selection_lis)
+                self.add_all()
+                return "finished"
+
         else:
             # checks whether this gameweek is the last selection of the league
             if selection_lis[0] > self.end_gameweek:
