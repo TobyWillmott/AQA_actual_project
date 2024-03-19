@@ -26,7 +26,7 @@ class TkApplication(tk.Tk):
         self.game = Game()
 
         self.resizable(False, False)
-        self.engine = create_engine("sqlite:///database/fantasy_football.sqlite", echo=True)
+        #self.engine = create_engine("sqlite:///database/fantasy_football.sqlite", echo=True)
         self.frames = {
             "sign_in_frame": SignIn(self),
             "register_frame": Registration(self)

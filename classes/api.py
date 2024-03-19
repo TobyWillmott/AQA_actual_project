@@ -28,10 +28,11 @@ def api_check_points(selections):
     '''
     Parameters
     ----------
-    selections - a list of a list with each sublist representing a different user
-    sublist[0] = user_id
-    sublist[1] = team_id
-    sublist[2] = gameweek_id
+    selections - a dimensional list with each sublist representing a different user
+    sublist[x][0] = user_id
+    sublist[x][1] = team_id
+    sublist[x][2] = gameweek_id
+    where x represents a user
 
     returns a list in containing the number of points of each user
     '''

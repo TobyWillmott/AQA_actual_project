@@ -25,8 +25,8 @@ class Game:
         This method initialises all the attributes of the class
         """
         self.player = None
-        # self.time = datetime(2023, 8, 11, 17, 30, 0)
-        self.time = datetime.now()
+        self.time = datetime(2023, 8, 11, 17, 0, 0)
+        #self.time = datetime.now()
 
     def add_user(self, first_name_, last_name_, username_, password_):
         """
@@ -410,7 +410,7 @@ class Player:
             else:
                 self.end_gameweek = self.current_gameweek + 19
             if selection_lis[0] > self.end_gameweek:
-                raise ValueError("Gameweek has finished")
+                raise ValueError("League has finished")
             if not self.team_playing(self.current_gameweek, selection_lis[2]):
                 raise ValueError("Team is not playing \n in this gameweek")
             self.user_selections = [selection_lis]
