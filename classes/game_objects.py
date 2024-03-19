@@ -25,8 +25,8 @@ class Game:
         This method initialises all the attributes of the class
         """
         self.player = None
-        self.time = datetime(2023, 8, 11, 17, 0, 0)
-        #self.time = datetime.now()
+        #self.time = datetime(2023, 8, 11, 17, 0, 0)
+        self.time = datetime.now()
 
     def add_user(self, first_name_, last_name_, username_, password_):
         """
@@ -40,10 +40,10 @@ class Game:
             raise ValueError("First name is invalid")
         if last_name_ == "":
             raise ValueError("Surname is invalid")
-        password_pattern = "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+        password_pattern = "^^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
         if not re.fullmatch(password_pattern, password_):
             raise ValueError(
-                "Password is invalid, Must have minimum eight characters, at least one letter and one number")
+                "Password is invalid, Must have minimum eight characters, at least one \nuppercase letter, one number and one special character")
         qry.qry_add_user(first_name_, last_name_, username_, password_)
 
     def add_league(self, gameweek_id_, league_name_):
