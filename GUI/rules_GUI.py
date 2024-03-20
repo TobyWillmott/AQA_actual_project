@@ -37,7 +37,6 @@ class Rules(tk.Frame):
                                     font=("Arial", 25))
         self.rules_label = tk.Label(self, text=self.text, bg="#E5E5E5", fg="black")
         self.back_button = tk.Button(self, text="Back to homepage", bg="grey", command=self.back_clicked, highlightbackground="#E5E5E5", padx=70, pady=10, relief="flat")
-        self.back_button = tk.Button(self, text="Back to homepage", bg="#E5E5E5", command=self.back_clicked)
         self.place_widgets()
     def place_widgets(self):
         '''
