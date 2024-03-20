@@ -25,8 +25,9 @@ class Game:
         This method initialises all the attributes of the class
         """
         self.player = None
-        self.time = datetime(2023, 8, 11, 17, 0, 0)
-        #self.time = datetime.now()
+        #this variable sets the current time - to create leagues in the past change uncomment the second self.time
+        self.time = datetime.now()
+        # self.time = datetime(2023, 8, 11, 17, 0, 0)
 
     def add_user(self, first_name_, last_name_, username_, password_):
         """
@@ -40,10 +41,9 @@ class Game:
             raise ValueError("First name is invalid")
         if last_name_ == "":
             raise ValueError("Surname is invalid")
-        password_pattern = "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+        password_pattern = "^^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
         if not re.fullmatch(password_pattern, password_):
-            raise ValueError(
-                "Password is invalid, Must have minimum eight characters, at least one letter and one number")
+            raise ValueError("Password is invalid, Must have minimum eight characters, at least one \nuppercase letter, one number and one special character")
         qry.qry_add_user(first_name_, last_name_, username_, password_)
 
     def add_league(self, gameweek_id_, league_name_):
@@ -147,16 +147,17 @@ class Game:
         return sorted[0]
     def merge_sort_league_id(self, league_lis):
         """
-        This function is used to order the queries of the data by league_id
+        This function is used to order the queries of the data by league_id in descending order
         Parameters
         ----------
-        league_lis
+        league_lis - a 2 dimensional list of all the leagues with the league_id and gameweek_id
 
         Returns
         -------
-
+        league_lis ordered in descending order by the league id of each league
         """
         def mergesort(lis):
+            # this function recursively sorts the list
             if len(lis) == 1 or len(lis) == 0:
                 return (lis)
             else:
@@ -167,6 +168,7 @@ class Game:
                 return com
 
         def merge(left, right):
+            #this function recombines lists in order
             sorted_list = []
             i = 0
             j = 0
@@ -488,7 +490,7 @@ class Player:
             else:
                 # makes the selection normally
                 if self.team_playing(self.current_gameweek, selection_lis[2]) == False:
-                    raise ValueError("Team is not playing in this gameweek")
+                    raise ValueError("Team is not playing \n in this gameweek")
                 for gameweek in self.user_selections:
                     if gameweek[2] == selection_lis[2]:
                         return "Team has already been selected"

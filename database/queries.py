@@ -161,10 +161,10 @@ def qry_get_league_starting_gameweek(league_id_):
 
 def qry_get_final_league_gameweek():
     '''
-    This function is used to get the league id of the last league added ot the database
+    This function is used to get all the leagues
     Returns
     -------
-    The league id of the last league added
+    A list of all the leagues and their starting gameweek
     '''
     with Session(engine) as sess:
         gameweek_id = sess.query(League.league_id, League.gameweek_id).all()
