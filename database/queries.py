@@ -83,6 +83,16 @@ def qry_get_gameweek_id():
 
 
 def qry_add_user_league(user_id_, league_id_):
+    """
+    This function is used to add a value to the user_league database which is a linking table
+    This means that a user has joined a league
+
+    Parameters
+    ----------
+    user_id_ - user_id of the user
+    league_id_ - league_id of the league the user would like to join
+
+    """
     try:
         with Session(engine) as sess:
             user_league_value = UserLeague(user_id=user_id_, league_id=league_id_)
@@ -93,6 +103,12 @@ def qry_add_user_league(user_id_, league_id_):
 
 
 def qry_add_selection_list(user_selections):
+    """
+    This function is used to add a list of user selections to the Selection database
+    Parameters
+    ----------
+    user_selections - List of all selection made by a user in a format that can be directly added to the database
+    """
     with Session(engine) as sess:
         sess.add_all(user_selections)
         sess.commit()
@@ -108,7 +124,7 @@ def qry_add_selection_list(user_selections):
 
 def qry_get_teams():
     '''
-
+    This function is used to return a list of all the team names and their team_id
     Returns
     a list of all the team id and corresponding team name
 
@@ -123,6 +139,7 @@ def qry_get_teams():
 
 def qry_get_league_starting_gameweek(league_id_):
     '''
+    This function is used to get the starting gameweek of a league
 
     Parameters
     ----------
@@ -144,19 +161,19 @@ def qry_get_league_starting_gameweek(league_id_):
 
 def qry_get_final_league_gameweek():
     '''
-
+    This function is used to get the league id of the last league added ot the database
     Returns
     -------
     The league id of the last league added
     '''
     with Session(engine) as sess:
-        gameweek_id = sess.query(League.league_id, League.gameweek_id).order_by(League.league_id.desc()).first()
+        gameweek_id = sess.query(League.league_id, League.gameweek_id).all()
     return gameweek_id
 
 
 def qry_get_user_league_info(user_id_):
     '''
-
+    This function is used to return a list of leagues the user is currently part of
     Parameters
     ----------
     user_id_
@@ -181,7 +198,7 @@ def qry_get_user_league_info(user_id_):
 
 def qry_id_to_team(team_id_):
     '''
-
+    This function converts a team_id to a name abbreviation
     Parameters
     ----------
     team_id_
@@ -197,7 +214,7 @@ def qry_id_to_team(team_id_):
 
 def qry_get_user_name(user_ids):
     '''
-
+    This function is used to get the usernames from a list of user_ids
     Parameters
     ----------
     user_ids - a list of the user ids you would like the username for
@@ -217,6 +234,7 @@ def qry_get_user_name(user_ids):
 
 def qry_get_user_ids(league_id_):
     '''
+    This function is used to get a list of users that are part of a league
 
     Parameters
     ----------
@@ -232,6 +250,18 @@ def qry_get_user_ids(league_id_):
 
 
 def qry_get_selection(league_id_, user_id_):
+    """
+    This functin is used to get all the selections a user has made in a specific league
+
+    Parameters
+    ----------
+    league_id_
+    user_id_
+
+    Returns
+    -------
+    A 2 dimensional list of the selections of the user with each sublist having the data [user_id, team_id, gameweek_id]
+    """
     with Session(engine) as sess:
         selections = sess.query(Selection.user_id, Selection.team_id, Selection.gameweek_id).filter_by(
             league_id=league_id_, user_id=user_id_).all()
@@ -239,6 +269,17 @@ def qry_get_selection(league_id_, user_id_):
 
 
 def qry_get_games(user_id_, league_id_):
+    """
+    This function is used to get all the selections made by a user in a specific league
+    Parameters
+    ----------
+    user_id_
+    league_id_
+
+    Returns
+    -------
+    A 2 dimensional list of the selections of the user with each sublist having the data [team_id, gameweek_id]
+    """
     with Session(engine) as sess:
         selections = sess.query(Selection.team_id, Selection.gameweek_id).filter_by(league_id=league_id_,
                                                                                     user_id=user_id_).all()
@@ -263,12 +304,33 @@ def qry_check_in_league(user_id_, league_id_):
 
 
 def qry_get_league_name(league_id):
+    """
+    This function is used to get the league name of a league with league id: league_id
+
+    Parameters
+    ----------
+    league_id
+
+    Returns
+    -------
+    The league name
+    """
     with Session(engine) as sess:
         selection = sess.query(League.league_name).filter_by(league_id=league_id).first()
     return selection[0]
 
 
 def qry_get_league_starting_datetime(gameweek_id_):
+    """
+    This function is used ot get the gameweek start_date from the gameweek_id
+    Parameters
+    ----------
+    gameweek_id_
+
+    Returns
+    -------
+    gameweek start_date
+    """
     with Session(engine) as sess:
         gameweek = sess.query(Gameweek.start_date).filter_by(gameweek_id=gameweek_id_).first()
     return gameweek[0]

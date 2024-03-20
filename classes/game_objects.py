@@ -25,8 +25,8 @@ class Game:
         This method initialises all the attributes of the class
         """
         self.player = None
-        #self.time = datetime(2023, 8, 11, 17, 0, 0)
-        self.time = datetime.now()
+        self.time = datetime(2023, 8, 11, 17, 0, 0)
+        #self.time = datetime.now()
 
     def add_user(self, first_name_, last_name_, username_, password_):
         """
@@ -40,10 +40,10 @@ class Game:
             raise ValueError("First name is invalid")
         if last_name_ == "":
             raise ValueError("Surname is invalid")
-        password_pattern = "^^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
+        password_pattern = "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
         if not re.fullmatch(password_pattern, password_):
             raise ValueError(
-                "Password is invalid, Must have minimum eight characters, at least one \nuppercase letter, one number and one special character")
+                "Password is invalid, Must have minimum eight characters, at least one letter and one number")
         qry.qry_add_user(first_name_, last_name_, username_, password_)
 
     def add_league(self, gameweek_id_, league_name_):
@@ -59,16 +59,17 @@ class Game:
 
     def set_user(self, id):
         """
+        this function is used to set the current user by instantiating the player class
+
         Parameters
         ----------
         id - user id of the user
-
-        instantiating the player class
         """
         self.player = Player(id)
 
     def add_user_selections(self, selection_lis):
         """
+        this function is used to add the user selections to the player object
 
         Parameters
         ----------
@@ -82,12 +83,13 @@ class Game:
 
     def get_gameweek_id(self):
         '''
+        This function is used to get the gameweek timings
+        filters the list only showing dates that are in the future
+        used to display the possible starting gameweeks in the dropbox
 
         Returns
         a list of all the gameweek ids and the corresponding date
 
-        filters the list only showing dates that are in the future
-        used to display the possible starting gameweeks in the dropbox
         '''
         timings = qry.qry_get_gameweek_id()
         updated_timings = []
@@ -98,6 +100,7 @@ class Game:
 
     def get_username_details(self, username_entry):
         """
+        This function is used to get login details for a user to check whether correct details entered
 
         Parameters
         ----------
@@ -110,6 +113,7 @@ class Game:
 
     def get_teams(self):
         """
+        This function is used to get a list of all the teams and team id
 
         Returns
         a list containing team id and corresponding team name
@@ -119,7 +123,7 @@ class Game:
 
     def get_league_starting_gameweek(self, league_id_):
         """
-
+        This function is used to get the starting gameweek date of a league
         Parameters
         ----------
         league_id_ - league_id of the league you would like the starting gameweek of
@@ -135,13 +139,55 @@ class Game:
 
         Returns
         -------
-        the league id of the last league added
+        the league id and the league start_gameweek_id of the last league added
 
         """
-        return qry.qry_get_final_league_gameweek()
+        lis_leagues = qry.qry_get_final_league_gameweek()
+        sorted = self.merge_sort_league_id(lis_leagues)
+        return sorted[0]
+    def merge_sort_league_id(self, league_lis):
+        """
+        This function is used to order the queries of the data by league_id
+        Parameters
+        ----------
+        league_lis
 
+        Returns
+        -------
+
+        """
+        def mergesort(lis):
+            if len(lis) == 1 or len(lis) == 0:
+                return (lis)
+            else:
+                middle = (len(lis)) // 2
+                left = mergesort(lis[:middle])
+                right = mergesort(lis[middle:])
+                com = merge(left, right)
+                return com
+
+        def merge(left, right):
+            sorted_list = []
+            i = 0
+            j = 0
+
+            while i < len(left) and j < len(right):
+                if left[i][0] > right[j][0]:
+                    sorted_list.append(left[i])
+                    i += 1
+                else:
+                    sorted_list.append(right[j])
+                    j += 1
+
+            sorted_list += right[j:]
+            sorted_list += left[i:]
+
+            return sorted_list
+        sorted_list = mergesort(league_lis)
+        return sorted_list
     def get_user_league_info(self, user_id_):
         """
+        This function is used to get all the leagues that a user is part of
 
         Parameters
         ----------
@@ -155,6 +201,7 @@ class Game:
 
     def id_to_team(self, team_id_):
         """
+        This function is used to convert a team id to a team abbreviation
 
         Parameters
         ----------
@@ -168,7 +215,7 @@ class Game:
 
     def get_user_name(self, user_ids):
         """
-
+        This function is used to convert a list of user ids to a list of usernames
         Parameters
         ----------
         user_ids - a list of user ids
@@ -181,7 +228,7 @@ class Game:
 
     def get_user_ids(self, league_id_):
         """
-
+        This function is used to return the users that are part of a league
         Parameters
         ----------
         league_id_
@@ -194,7 +241,7 @@ class Game:
 
     def get_selection(self, league_id_, user_id_):
         """
-
+        This function is used to get the selections made by a user in a league
         Parameters
         ----------
         league_id_
@@ -202,13 +249,13 @@ class Game:
 
         Returns
         -------
-        a list of user_ids that contain are part of the league with league id: league_id
+        a list of selections made by a user
         """
         return qry.qry_get_selection(league_id_, user_id_)
 
     def match_info(self, game_week_id):
         """
-
+        This function is used to get a list of the match data for a given gameweek
         Parameters
         ----------
         game_week_id - gameweek_id of the gameweek you would like information from
@@ -221,6 +268,7 @@ class Game:
 
     def check_points(self, user_ids, league_id):
         """
+        This function is used to check the numner of points each user has in a league
 
         Parameters
         ----------
@@ -240,7 +288,7 @@ class Game:
 
     def hash_password(self, password):
         """
-
+        this function is used to hash a password using sha256
         Parameters
         ----------
         password
@@ -258,7 +306,7 @@ class Game:
 
     def get_games(self, user_id, league_id):
         """
-
+        This function is used to get all the match information that a user has selected for a specific league
         Parameters
         ----------
         user_id
@@ -283,7 +331,7 @@ class Game:
 
     def id_to_colour(self, difficulty):
         """
-
+        This function is used to convert a difficulty rating to a colour
         Parameters
         ----------
         difficulty - the difficulty of a match - (a number 1 to 5)
@@ -307,7 +355,8 @@ class Game:
 
     def check_error_joining(self, user_id, league_id, gameweek_id):
         """
-
+        this subroutine is used to check whether a user is able to join a league by checking whether the user is
+        already in this league
         Parameters
         ----------
         user_id
@@ -318,8 +367,7 @@ class Game:
         -------
         a ValueError if there is an error joining a league
 
-        this subroutine is used to check whether a user is able to join a league by checking whether the user is
-        already in this league
+
         """
         if qry.qry_check_in_league(user_id, league_id) != []:
             # qry.qry_check in league returns a list containing the user_league_id if the user is part of the league
@@ -330,6 +378,7 @@ class Game:
 
     def get_league_name(self, league_id):
         """
+        This function is used to get the league name of a league with league_id: league_id
 
         Parameters
         ----------

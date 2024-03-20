@@ -26,11 +26,9 @@ class SignIn(tk.Frame):
         self.label_username = tk.Label(self, text="Username:", bg="#E5E5E5", fg="black")
         self.label_password = tk.Label(self, text='Password: ', bg="#E5E5E5", fg="black")
         self.username_var = tk.StringVar()
-        self.username_var.set("tobywillmott")
         self.username_entry = tk.Entry(self, textvariable=self.username_var, width=25, bg="white", font=('Arial', 20),
                                        fg="black")
         self.password_var = tk.StringVar()
-        self.password_var.set("password123")
         self.password_entry = tk.Entry(self, textvariable=self.password_var, width=25, bg="white", font=('Arial', 20),
                                        fg="black", show="*")
         self.enter_button = tk.Button(self, text='Login', command=self.enter_button_clicked, padx=170, pady=12, highlightbackground="#E5E5E5", activebackground="#545354", relief="flat", bg="grey")

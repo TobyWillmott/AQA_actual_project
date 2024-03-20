@@ -4,6 +4,8 @@ import json
 
 def api_match_info(game_week_id):
     """
+    This function is used to get all the matches and the difficulty from the api for a specific gameweek
+
     Parameters
     ----------
     game_week_id - the gameweek the subroutine gets matches for
@@ -26,9 +28,10 @@ def api_match_info(game_week_id):
 
 def api_check_points(selections):
     '''
+    This function is used to calculate the number of points that each user in the selections list has
     Parameters
     ----------
-    selections - a dimensional list with each sublist representing a different user
+    selections - a multi dimensional list with each sublist representing a different user
     sublist[x][0] = user_id
     sublist[x][1] = team_id
     sublist[x][2] = gameweek_id
@@ -65,6 +68,8 @@ def api_check_points(selections):
 
 def get_games(user_selections):
     '''
+    This function is used to get all the match information that a user has selected for a specific league
+
     Parameters
     ----------
     user_selections - a 2-dimensional list with each sublist representing a [team_id, gameweek_id]
@@ -92,6 +97,8 @@ def get_games(user_selections):
 
 def team_playing(gameweek_id, team_id):
     '''
+    This function is used to check whether a team is playing in a specific gameweeek
+
     Parameters
     ----------
     gameweek_id
